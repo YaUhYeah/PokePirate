@@ -90,7 +90,10 @@ enum {
     MON_DATA_EARTH_RIBBON,
     MON_DATA_WORLD_RIBBON,
     MON_DATA_UNUSED_RIBBONS,
-    MON_DATA_EVENT_LEGAL,
+    MON_DATA_IS_SHADOW,
+    MON_DATA_REVERSE_MODE,
+    MON_DATA_HEART_VALUE,
+    MON_DATA_HEART_MAX,
     MON_DATA_KNOWN_MOVES,
     MON_DATA_RIBBON_COUNT,
     MON_DATA_RIBBONS,
@@ -172,7 +175,7 @@ struct PokemonSubstruct3
  /* 0x0B */ u32 worldRibbon:1; // distributed during Pokémon Festa '04 and '05 to tournament winners
  /* 0x0B */ u32 unusedRibbons:2; // discarded in Gen 4
  /* 0x0B */ u32 abilityNum:2;
- /* 0x0B */ u32 eventLegal:1; // controls Mew & Deoxys obedience; if set, Pokémon is a fateful encounter in Gen 4+; set for in-game event island legendaries, some distributed events, and Pokémon from XD: Gale of Darkness.
+ /* 0x0B */ u32 isShadow:1; // was previously eventLegal, is now used for checking if it's a shadow pokemon
 }; /* size = 12 */
 
 // Number of bytes in the largest Pokémon substruct.
@@ -193,11 +196,22 @@ union PokemonSubstruct
     u16 raw[NUM_SUBSTRUCT_BYTES / 2]; // /2 because it's u16, not u8
 };
 
+union NicknameShadowdata
+{
+    u8 nickname[POKEMON_NAME_LENGTH];
+    struct Shadowdata
+    {
+        u8 isReverse;
+        u16 heartValue;
+        u16 heartMax;
+    } shadowData;
+};
+
 struct BoxPokemon
 {
     u32 personality;
     u32 otId;
-    u8 nickname[POKEMON_NAME_LENGTH];
+    union NicknameShadowdata nickData;
     u8 language;
     u8 isBadEgg:1;
     u8 hasSpecies:1;
@@ -292,6 +306,10 @@ struct BattlePokemon
     /*0x51*/ u32 status2;
     /*0x55*/ u32 otId;
     /*0x59*/ u8 metLevel;
+    /*0x5A*/ u8 isShadow;
+    /*0x5B*/ u8 isReverse;
+    /*0x5C*/ u16 heartVal;
+    /*0x5E*/ u16 heartMax;
 };
 
 struct SpeciesInfo
@@ -425,7 +443,6 @@ void CreateBattleTowerMon_HandleLevel(struct Pokemon *mon, struct BattleTowerPok
 void CreateApprenticeMon(struct Pokemon *mon, const struct Apprentice *src, u8 monId);
 void CreateMonWithEVSpreadNatureOTID(struct Pokemon *mon, u16 species, u8 level, u8 nature, u8 fixedIV, u8 evSpread, u32 otId);
 void ConvertPokemonToBattleTowerPokemon(struct Pokemon *mon, struct BattleTowerPokemon *dest);
-void CreateEventLegalMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId);
 bool8 ShouldIgnoreDeoxysForm(u8 caseId, u8 battlerId);
 u16 GetUnionRoomTrainerPic(void);
 u16 GetUnionRoomTrainerClass(void);

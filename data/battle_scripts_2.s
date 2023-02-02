@@ -76,6 +76,25 @@ BattleScript_SuccessBallThrowEnd::
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
 
+BattleScript_SuccessBallThrowShadow::
+	setbyte sMON_CAUGHT, TRUE
+	incrementgamestat GAME_STAT_POKEMON_CAPTURES
+BattleScript_PrintCaughtMonInfoShadow::
+	printstring STRINGID_GOTCHAPKMNCAUGHT
+	jumpifbyte CMP_NOT_EQUAL, sEXP_CATCH, TRUE, BattleScript_TryPrintCaughtMonInfo
+	setbyte sGIVEEXP_STATE, 0
+	getexp BS_TARGET
+	sethword gBattle_BG2_X, 0
+BattleScript_GiveCaughtMonEndShadow::
+	givecaughtmon
+	tryillusionoff BS_TARGET
+	dofaintanimation BS_TARGET
+	cleareffectsonfaint BS_TARGET
+	setbyte sMON_CAUGHT, FALSE
+BattleScript_SuccessBallThrowEndShadow::
+	moveendall
+	goto BattleScript_HandleFaintedMon
+
 BattleScript_WallyBallThrow::
 	printstring STRINGID_GOTCHAPKMNCAUGHT2
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT

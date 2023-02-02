@@ -1547,3 +1547,14 @@ void BtlController_EmitDebugMenu(u8 bufferId)
     sBattleBuffersTransferData[0] = CONTROLLER_DEBUGMENU;
     PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 1);
 }
+
+void BtlController_EmitHeartValueUpdate(u8 bufferId, u8 partyId, s32 amount)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_HEARTVALUEUPDATE;
+    sBattleBuffersTransferData[1] = partyId;
+    sBattleBuffersTransferData[2] = amount;
+    sBattleBuffersTransferData[3] = (amount & 0x0000FF00) >> 8;
+    sBattleBuffersTransferData[4] = (amount & 0x00FF0000) >> 16;
+    sBattleBuffersTransferData[5] = (amount & 0xFF000000) >> 24;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 6);
+}

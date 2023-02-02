@@ -81,6 +81,7 @@ static void SafariHandleLinkStandbyMsg(void);
 static void SafariHandleResetActionMoveSelection(void);
 static void SafariHandleEndLinkBattle(void);
 static void SafariHandleBattleDebug(void);
+static void SafariHandleHeartValueUpdate(void);
 static void SafariCmdEnd(void);
 
 static void SafariBufferRunCommand(void);
@@ -146,6 +147,7 @@ static void (*const sSafariBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
     [CONTROLLER_RESETACTIONMOVESELECTION] = SafariHandleResetActionMoveSelection,
     [CONTROLLER_ENDLINKBATTLE]            = SafariHandleEndLinkBattle,
     [CONTROLLER_DEBUGMENU]                = SafariHandleBattleDebug,
+    [CONTROLLER_HEARTVALUEUPDATE]         = SafariHandleHeartValueUpdate,
     [CONTROLLER_TERMINATOR_NOP]           = SafariCmdEnd
 };
 
@@ -689,6 +691,11 @@ static void SafariHandleEndLinkBattle(void)
 }
 
 static void SafariHandleBattleDebug(void)
+{
+    SafariBufferExecCompleted();
+}
+
+static void SafariHandleHeartValueUpdate(void)
 {
     SafariBufferExecCompleted();
 }

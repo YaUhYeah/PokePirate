@@ -2049,6 +2049,11 @@
 	.4byte \ptr
 	.endm
 
+	.macro modifyheartvalue battler:req amount:req
+	various \battler, VARIOUS_MODIFY_HEART_VALUE
+	.4byte \amount
+	.endm
+
 @ helpful macros
 	.macro setstatchanger stat:req, stages:req, down:req
 	setbyte sSTATCHANGER, \stat | \stages << 3 | \down << 7

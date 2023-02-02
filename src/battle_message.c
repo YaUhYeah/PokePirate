@@ -773,6 +773,10 @@ static const u8 sText_StatWasHeightened[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s
 static const u8 sText_ElectricTerrainActivatedAbility[] = _("The Electric Terrain activated\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ABILITY}!");
 static const u8 sText_AbilityWeakenedSurroundingMonsStat[] = _("{B_ATK_NAME_WITH_PREFIX}'s {B_ATK_ABILITY}\nweakened the {B_BUFF1} of\lall surrounding Pokémon!\p");
 static const u8 sText_AttackerGainedStrengthFromTheFallen[] = _("{B_ATK_NAME_WITH_PREFIX} gained strength\nfrom the fallen!");
+static const u8 sText_ShadowPkmnNotice[] = _("Oh!\nA Shadow Pokémon!\p");
+static const u8 sText_TrainerCallToMon[] = _("{B_ATK_TRAINER_NAME} called out to {B_ATK_NAME_WITH_PREFIX}!");
+static const u8 sText_PkmnStoredEXP[] = _("{B_BUFF1} stored{B_BUFF2}\n{B_BUFF3} EXP. Points!\p");
+static const u8 sText_PkmnHeartValueUpdate[] = _("The door to {B_BUFF1}'s\nheart opened a little!\p");
 
 const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
@@ -1402,6 +1406,10 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_PKMNTOOKTARGETHIGH - BATTLESTRINGS_TABLE_START] = sText_PkmnTookTargetHigh,
     [STRINGID_TARGETTOOHEAVY - BATTLESTRINGS_TABLE_START] = sText_TargetTooHeavy,
     [STRINGID_ATTACKERLOSTELECTRICTYPE - BATTLESTRINGS_TABLE_START] = sText_AttackerLostElectricType,
+    [STRINGID_SHADOWPKMNNOTICE - BATTLESTRINGS_TABLE_START] = sText_ShadowPkmnNotice,
+    [STRINGID_TRAINERCALLTOMON - BATTLESTRINGS_TABLE_START] = sText_TrainerCallToMon,
+    [STRINGID_PKMNSTOREDEXP - BATTLESTRINGS_TABLE_START] = sText_PkmnStoredEXP,
+    [STRINGID_PKMNHEARTGAUGEUPDATE - BATTLESTRINGS_TABLE_START] = sText_PkmnHeartValueUpdate,
 };
 
 const u16 gZEffectStringIds[] =
@@ -1875,6 +1883,7 @@ const u8 gText_WhatWillPkmnDo2[] = _("What will\n{B_PLAYER_NAME} do?");
 const u8 gText_WhatWillWallyDo[] = _("What will\nWALLY do?");
 const u8 gText_LinkStandby[] = _("{PAUSE 16}Link standby…");
 const u8 gText_BattleMenu[] = _("FIGHT{CLEAR_TO 56}BAG\nPOKéMON{CLEAR_TO 56}RUN");
+const u8 gText_BattleMenuTrainer[] = _("FIGHT{CLEAR_TO 56}BAG\nPOKéMON{CLEAR_TO 56}CALL");
 const u8 gText_SafariZoneMenu[] = _("BALL{CLEAR_TO 56}{POKEBLOCK}\nGO NEAR{CLEAR_TO 56}RUN");
 const u8 gText_MoveInterfacePP[] = _("PP ");
 const u8 gText_MoveInterfaceType[] = _("TYPE/");

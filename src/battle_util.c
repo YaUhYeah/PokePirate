@@ -748,6 +748,29 @@ void HandleAction_Run(void)
         gBattleOutcome |= B_OUTCOME_LINK_BATTLE_RAN;
         gSaveBlock2Ptr->frontier.disableRecordBattle = TRUE;
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        if (GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattlerAttacker]], MON_DATA_IS_SHADOW, NULL))
+        {
+            gBattlescriptCurrInstr = BattleScript_TrainerCallToMonShadow;
+            gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
+        }
+        else
+        {
+            if (gBattleMons[gBattlerAttacker].statStages[STAT_ACC] < MAX_STAT_STAGE)
+            {
+                if (B_X_ITEMS_BUFF >= GEN_7)
+                    gBattleMons[gBattlerAttacker].statStages[STAT_ACC] += 2;
+                else
+                    gBattleMons[gBattlerAttacker].statStages[STAT_ACC] += 1;
+                if (gBattleMons[gBattlerAttacker].statStages[STAT_ACC] > MAX_STAT_STAGE)
+                    gBattleMons[gBattlerAttacker].statStages[STAT_ACC] = MAX_STAT_STAGE;
+            }
+
+            gBattlescriptCurrInstr = BattleScript_TrainerCallToMon;
+            gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
+        }
+    }
     else
     {
         if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
@@ -776,6 +799,9 @@ void HandleAction_Run(void)
         }
     }
 }
+
+
+
 
 void HandleAction_WatchesCarefully(void)
 {
@@ -8020,16 +8046,6 @@ u32 GetMoveTarget(u16 move, u8 setTarget)
     return targetBattler;
 }
 
-static bool32 IsMonEventLegal(u8 battlerId)
-{
-    if (GetBattlerSide(battlerId) == B_SIDE_OPPONENT)
-        return TRUE;
-    if (GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]], MON_DATA_SPECIES, NULL) != SPECIES_DEOXYS
-        && GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]], MON_DATA_SPECIES, NULL) != SPECIES_MEW)
-            return TRUE;
-    return GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]], MON_DATA_EVENT_LEGAL, NULL);
-}
-
 u8 IsMonDisobedient(void)
 {
     s32 rnd;
@@ -8041,31 +8057,25 @@ u8 IsMonDisobedient(void)
         return 0;
     if (GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT)
         return 0;
-
-    if (IsMonEventLegal(gBattlerAttacker)) // only false if illegal Mew or Deoxys
-    {
-        if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && GetBattlerPosition(gBattlerAttacker) == 2)
-            return 0;
-        if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
-            return 0;
-        if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
-            return 0;
-    #if B_OBEDIENCE_MECHANICS < GEN_8
-        if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
-            return 0;
-    #endif
-        if (FlagGet(FLAG_BADGE08_GET))
-            return 0;
-
-        obedienceLevel = 10;
-
-        if (FlagGet(FLAG_BADGE02_GET))
-            obedienceLevel = 30;
-        if (FlagGet(FLAG_BADGE04_GET))
-            obedienceLevel = 50;
-        if (FlagGet(FLAG_BADGE06_GET))
-            obedienceLevel = 70;
-    }
+    if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && GetBattlerPosition(gBattlerAttacker) == 2)
+        return 0;
+    if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
+        return 0;
+    if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
+        return 0;
+#if B_OBEDIENCE_MECHANICS < GEN_8
+    if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
+        return 0;
+#endif
+    if (FlagGet(FLAG_BADGE08_GET))
+        return 0;
+    obedienceLevel = 10;
+    if (FlagGet(FLAG_BADGE02_GET))
+        obedienceLevel = 30;
+    if (FlagGet(FLAG_BADGE04_GET))
+        obedienceLevel = 50;
+    if (FlagGet(FLAG_BADGE06_GET))
+        obedienceLevel = 70;
 
 #if B_OBEDIENCE_MECHANICS >= GEN_8
     if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))

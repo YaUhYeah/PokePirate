@@ -13,7 +13,8 @@ enum
 enum
 {
     HEALTH_BAR,
-    EXP_BAR
+    EXP_BAR,
+    HEART_GAUGE
 };
 
 enum
@@ -46,7 +47,7 @@ enum
 #define TAG_STATUS_SUMMARY_BALLS_TILE   0xD714
 
 #define TAG_HEALTHBAR_PAL               TAG_HEALTHBAR_PLAYER1_TILE
-#define TAG_HEALTHBOX_PAL               TAG_HEALTHBOX_PLAYER1_TILE
+#define TAG_HEALTHBOX_PAL               TAG_HEALTHBOX_PLAYER1_PAL
 
 #define TAG_MEGA_TRIGGER_TILE           0xD777
 #define TAG_MEGA_INDICATOR_TILE         0xD778
@@ -59,6 +60,11 @@ enum
 #define TAG_ALPHA_INDICATOR_PAL         0xD779
 #define TAG_OMEGA_INDICATOR_PAL         0xD77A
 #define TAG_ZMOVE_TRIGGER_PAL           0xD77B
+
+#define TAG_HEALTHBOX_PLAYER1_PAL       0xD77D
+#define TAG_HEALTHBOX_PLAYER2_PAL       0xD77E
+#define TAG_HEALTHBOX_OPPONENT1_PAL     0xD77F
+#define TAG_HEALTHBOX_OPPONENT2_PAL     0xD780
 
 enum
 {

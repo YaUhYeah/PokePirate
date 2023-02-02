@@ -554,6 +554,7 @@
 #define B_ANIM_SUBSTITUTE_TO_MON        5
 #define B_ANIM_MON_TO_SUBSTITUTE        6
 #define B_ANIM_CRITICAL_CAPTURE_THROW   7
+#define B_ANIM_SECTION_UNLOCK           8
 
 // status animation table (gBattleAnims_StatusConditions)
 #define B_ANIM_STATUS_PSN               0

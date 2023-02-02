@@ -1979,6 +1979,24 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
                 }
                 break;
             }
+            case F_TRAINER_PARTY_SHADOW_TEST:
+            {
+                const struct TrainerMonNoItemDefaultMovesShadow *partyData = gTrainers[trainerNum].party.NoItemDefaultMovesShadow;
+
+                for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
+                    nameHash += gSpeciesNames[partyData[i].species][j];
+
+                personalityValue += nameHash << 8;
+                fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
+                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+                if (partyData[i].isShadow)
+                {
+                    SetMonData(&party[i], MON_DATA_IS_SHADOW, &partyData[i].isShadow);
+                    SetMonData(&party[i], MON_DATA_HEART_VALUE, &partyData[i].heartGauge);
+                    SetMonData(&party[i], MON_DATA_HEART_MAX, &partyData[i].heartGauge);
+                }
+                break;
+            }
             }
 
         #if B_TRAINER_CLASS_POKE_BALLS >= GEN_7
@@ -3630,6 +3648,11 @@ static void DoBattleIntro(void)
                                           | BATTLE_TYPE_TRAINER_HILL)))
                 {
                     HandleSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gActiveBattler].species), FLAG_SET_SEEN, gBattleMons[gActiveBattler].personality);
+                    if (gBattleMons[gActiveBattler].isShadow)
+                    {
+                        LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_PSN);
+                        PrepareStringBattle(STRINGID_SHADOWPKMNNOTICE, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT));
+                    }
                 }
             }
 
@@ -4203,8 +4226,9 @@ static void HandleTurnActionSelectionState(void)
                          && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
                          && gBattleResources->bufferB[gActiveBattler][1] == B_ACTION_RUN)
                 {
-                    BattleScriptExecute(BattleScript_PrintCantRunFromTrainer);
-                    gBattleCommunication[gActiveBattler] = STATE_BEFORE_ACTION_CHOSEN;
+                    /* BattleScriptExecute(BattleScript_PrintCantRunFromTrainer);
+                    gBattleCommunication[gActiveBattler] = STATE_BEFORE_ACTION_CHOSEN; */
+                    gBattleCommunication[gActiveBattler]++; // skip to HandleAction_Run, so that the call-to-mon script runs properly
                 }
                 else if (IsRunningFromBattleImpossible() != BATTLE_RUN_SUCCESS
                          && gBattleResources->bufferB[gActiveBattler][1] == B_ACTION_RUN)

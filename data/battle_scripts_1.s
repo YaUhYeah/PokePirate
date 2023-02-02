@@ -10216,3 +10216,28 @@ BattleScript_PokemonCantUseTheMove::
 	printstring STRINGID_BUTPOKEMONCANTUSETHEMOVE
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+
+BattleScript_TrainerCallToMon::
+	printstring STRINGID_TRAINERCALLTOMON
+	waitmessage B_WAIT_TIME_SHORTEST
+	setstatchanger STAT_ACC, 1, FALSE
+	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_MoveEnd
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_TrainerCallToMonEnd
+	setgraphicalstatchangevalues
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	setbyte gBattleCommunication STAT_ACC
+	stattextbuffer BS_ATTACKER
+	printstring STRINGID_ATTACKERSSTATROSE
+	waitmessage B_WAIT_TIME_LONG
+	end2
+BattleScript_TrainerCallToMonShadow::
+	printstring STRINGID_TRAINERCALLTOMON
+	waitmessage B_WAIT_TIME_SHORTEST
+	setbyte sHEARTVALUE_STATE, 0
+	modifyheartvalue BS_ATTACKER, -1000
+	end2
+BattleScript_TrainerCallToMonEnd::
+	pause B_WAIT_TIME_SHORTEST
+	printstring STRINGID_STATSWONTINCREASE
+	waitmessage B_WAIT_TIME_LONG
+	end2

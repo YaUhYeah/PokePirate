@@ -2514,6 +2514,8 @@ void TryShinyAnimation(u8 battler, struct Pokemon *mon)
         }
     }
 
+    ShdwLoadHealthboxSprite();
+
     gBattleSpritesDataPtr->healthBoxesData[battler].finishedShinyMonAnim = TRUE;
 }
 

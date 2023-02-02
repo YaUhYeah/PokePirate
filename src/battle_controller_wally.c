@@ -90,6 +90,7 @@ static void WallyHandleLinkStandbyMsg(void);
 static void WallyHandleResetActionMoveSelection(void);
 static void WallyHandleEndLinkBattle(void);
 static void WallyHandleBattleDebug(void);
+static void WallyHandleHeartValueUpdate(void);
 static void WallyCmdEnd(void);
 
 static void WallyBufferRunCommand(void);
@@ -160,6 +161,7 @@ static void (*const sWallyBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
     [CONTROLLER_RESETACTIONMOVESELECTION] = WallyHandleResetActionMoveSelection,
     [CONTROLLER_ENDLINKBATTLE]            = WallyHandleEndLinkBattle,
     [CONTROLLER_DEBUGMENU]                = WallyHandleBattleDebug,
+    [CONTROLLER_HEARTVALUEUPDATE]         = WallyHandleHeartValueUpdate,
     [CONTROLLER_TERMINATOR_NOP]           = WallyCmdEnd
 };
 
@@ -492,6 +494,9 @@ static u32 CopyWallyMonData(u8 monId, u8 *dst)
         battleMon.abilityNum = GetMonData(&gPlayerParty[monId], MON_DATA_ABILITY_NUM);
         battleMon.otId = GetMonData(&gPlayerParty[monId], MON_DATA_OT_ID);
         battleMon.metLevel = GetMonData(&gPlayerParty[monId], MON_DATA_MET_LEVEL);
+        battleMon.isShadow = GetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW);
+        battleMon.heartVal = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE);
+        battleMon.heartMax = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX);
         GetMonData(&gPlayerParty[monId], MON_DATA_NICKNAME, nickname);
         StringCopy_Nickname(battleMon.nickname, nickname);
         GetMonData(&gPlayerParty[monId], MON_DATA_OT_NAME, battleMon.otName);
@@ -751,6 +756,22 @@ static u32 CopyWallyMonData(u8 monId, u8 *dst)
         dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_TOUGH_RIBBON);
         size = 1;
         break;
+    case REQUEST_IS_SHADOW_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW);
+        size = 1;
+        break;
+    case REQUEST_REVERSE_MODE_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_REVERSE_MODE);
+        size = 1;
+        break;
+    case REQUEST_HEART_VALUE_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE);
+        size = 1;
+        break;
+    case REQUEST_HEART_MAX_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX);
+        size = 1;
+        break;
     }
 
     return size;
@@ -827,6 +848,7 @@ static void SetWallyMonData(u8 monId)
             SetMonData(&gPlayerParty[monId], MON_DATA_SPEED, &battlePokemon->speed);
             SetMonData(&gPlayerParty[monId], MON_DATA_SPATK, &battlePokemon->spAttack);
             SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF, &battlePokemon->spDefense);
+            SetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW, &battlePokemon->isShadow);
         }
         break;
     case REQUEST_SPECIES_BATTLE:
@@ -995,6 +1017,18 @@ static void SetWallyMonData(u8 monId)
         break;
     case REQUEST_TOUGH_RIBBON_BATTLE:
         SetMonData(&gPlayerParty[monId], MON_DATA_TOUGH_RIBBON, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_IS_SHADOW_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_REVERSE_MODE_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_REVERSE_MODE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HEART_VALUE_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HEART_MAX_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX, &gBattleResources->bufferA[gActiveBattler][3]);
         break;
     }
 
@@ -1560,6 +1594,11 @@ static void WallyHandleEndLinkBattle(void)
 }
 
 static void WallyHandleBattleDebug(void)
+{
+    WallyBufferExecCompleted();
+}
+
+static void WallyHandleHeartValueUpdate(void)
 {
     WallyBufferExecCompleted();
 }

@@ -2228,19 +2228,12 @@ bool8 ScrCmd_lockfortrainer(struct ScriptContext *ctx)
 // This command will set a Pokémon's eventLegal bit; there is no similar command to clear it.
 bool8 ScrCmd_setmoneventlegal(struct ScriptContext *ctx)
 {
-    bool8 isEventLegal = TRUE;
-    u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
-
-    SetMonData(&gPlayerParty[partyIndex], MON_DATA_EVENT_LEGAL, &isEventLegal);
     return FALSE;
 }
 
 bool8 ScrCmd_checkmoneventlegal(struct ScriptContext *ctx)
 {
-    u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
-
-    gSpecialVar_Result = GetMonData(&gPlayerParty[partyIndex], MON_DATA_EVENT_LEGAL, NULL);
-    return FALSE;
+    return TRUE;
 }
 
 bool8 ScrCmd_trywondercardscript(struct ScriptContext *ctx)
@@ -2323,4 +2316,29 @@ bool8 ScrCmd_warpwhitefade(struct ScriptContext *ctx)
     DoWhiteFadeWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
+}
+
+bool8 ScrCmd_setwildshadowbattle(struct ScriptContext *ctx)
+{
+    u16 species = ScriptReadHalfword(ctx);
+    u8 level = ScriptReadByte(ctx);
+    u16 item = ScriptReadHalfword(ctx);
+    u16 heartValue = ScriptReadHalfword(ctx);
+    u16 species2 = ScriptReadHalfword(ctx);
+    u8 level2 = ScriptReadByte(ctx);
+    u16 item2 = ScriptReadHalfword(ctx);
+    u16 heartValue2 = ScriptReadHalfword(ctx);
+
+    if(species2 == SPECIES_NONE)
+    {
+        CreateScriptedWildShadowMon(species, level, item, heartValue);
+        gIsScriptedWildDouble = FALSE;
+    }
+    else
+    {
+        CreateScriptedDoubleWildShadowMon(species, level, item, heartValue, species2, level2, item2, heartValue2);
+        gIsScriptedWildDouble = TRUE;
+    }
+
+    return FALSE;
 }
