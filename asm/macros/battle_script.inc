@@ -2132,3 +2132,9 @@
 	.macro skydropyawn
 	various 0, VARIOUS_SKY_DROP_YAWN
 	.endm
+
+	.macro setshadowsky ptr:req
+	various BS_ATTACKER, VARIOUS_SET_SHADOW_SKY
+	.4byte \ptr
+	.endm
+	

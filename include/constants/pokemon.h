@@ -22,7 +22,8 @@
 #define TYPE_DRAGON           16
 #define TYPE_DARK             17
 #define TYPE_FAIRY            18
-#define NUMBER_OF_MON_TYPES   19
+#define TYPE_SHADOW           19
+#define NUMBER_OF_MON_TYPES   20
 
 // Pokemon egg groups
 #define EGG_GROUP_NONE          0
@@ -340,7 +341,7 @@
 
 #define NUM_ABILITY_SLOTS (NUM_NORMAL_ABILITY_SLOTS + NUM_HIDDEN_ABILITY_SLOTS)
 #define NUM_NORMAL_ABILITY_SLOTS 2
-#define NUM_HIDDEN_ABILITY_SLOTS 1
+#define NUM_HIDDEN_ABILITY_SLOTS 2
 
 // Species Flags
 #define FLAG_LEGENDARY          (1 << 0)

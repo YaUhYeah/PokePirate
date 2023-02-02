@@ -100,6 +100,7 @@ enum {
     MON_DATA_SPEED2,
     MON_DATA_SPATK2,
     MON_DATA_SPDEF2,
+    MON_DATA_SHADOW,
 };
 
 struct PokemonSubstruct0
@@ -110,7 +111,7 @@ struct PokemonSubstruct0
     /*0x08*/ u8 ppBonuses;
     /*0x09*/ u8 friendship;
     /*0x0A*/ u16 pokeball:5; //31 balls
-             u16 filler:11;
+    /*0x0B*/ u8 shadow;
 }; /* size = 12 */
 
 struct PokemonSubstruct1
@@ -291,6 +292,7 @@ struct BattlePokemon
     /*0x4D*/ u32 status1;
     /*0x51*/ u32 status2;
     /*0x55*/ u32 otId;
+    /*0x59*/ u8 shadow;
 };
 
 struct BaseStats
@@ -559,5 +561,6 @@ u16 GetFormChangeTargetSpecies(struct Pokemon *mon, u16 method, u32 arg);
 u16 GetFormChangeTargetSpeciesBoxMon(struct BoxPokemon *mon, u16 method, u32 arg);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
 bool32 ShouldShowFemaleDifferences(u16 species, u32 personality);
+u8 CheckPartyShadow(struct Pokemon *party, u8 selection);
 
 #endif // GUARD_POKEMON_H

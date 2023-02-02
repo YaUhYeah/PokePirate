@@ -4794,7 +4794,8 @@ static void Cmd_playanimation(void)
     else if (animId == B_ANIM_RAIN_CONTINUES
           || animId == B_ANIM_SUN_CONTINUES
           || animId == B_ANIM_SANDSTORM_CONTINUES
-          || animId == B_ANIM_HAIL_CONTINUES)
+          || animId == B_ANIM_HAIL_CONTINUES
+          || animId == B_ANIM_SHADOW_SKY_CONTINUES)
     {
         BtlController_EmitBattleAnimation(BUFFER_A, animId, *argumentPtr);
         MarkBattlerForControllerExec(gActiveBattler);
@@ -4841,7 +4842,8 @@ static void Cmd_playanimation_var(void)
     else if (*animationIdPtr == B_ANIM_RAIN_CONTINUES
           || *animationIdPtr == B_ANIM_SUN_CONTINUES
           || *animationIdPtr == B_ANIM_SANDSTORM_CONTINUES
-          || *animationIdPtr == B_ANIM_HAIL_CONTINUES)
+          || *animationIdPtr == B_ANIM_HAIL_CONTINUES
+          || *animationIdPtr == B_ANIM_SHADOW_SKY_CONTINUES)
     {
         BtlController_EmitBattleAnimation(BUFFER_A, *animationIdPtr, *argumentPtr);
         MarkBattlerForControllerExec(gActiveBattler);
@@ -9708,6 +9710,19 @@ static void Cmd_various(void)
     case VARIOUS_SWAP_SIDE_STATUSES:
         CourtChangeSwapSideStatuses();
         break;
+    case VARIOUS_SET_SHADOW_SKY:
+        if (!TryChangeBattleWeather(gBattlerAttacker, ENUM_WEATHER_SHADOW_SKY, FALSE))
+            {
+                gMoveResultFlags |= MOVE_RESULT_MISSED;
+                gBattleCommunication[MULTISTRING_CHOOSER] = 2;
+                gBattlescriptCurrInstr += 7;
+            }
+        else
+            {
+                gBattleCommunication[MULTISTRING_CHOOSER] = 6;
+                gBattlescriptCurrInstr += 7;
+            }
+	return;
     } // End of switch (gBattlescriptCurrInstr[2])
 
     gBattlescriptCurrInstr += 3;
@@ -11152,6 +11167,29 @@ static void Cmd_weatherdamage(void)
                 && ability != ABILITY_SNOW_CLOAK
                 && ability != ABILITY_OVERCOAT
                 && ability != ABILITY_ICE_BODY
+                && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
+                && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES)
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+            }
+        }
+        if (gBattleWeather & B_WEATHER_SHADOW_SKY)
+        {
+            if (ability == ABILITY_SHADOW_BODY
+                && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
+                && !BATTLER_MAX_HP(gBattlerAttacker)
+                && !(gStatuses3[gBattlerAttacker] & STATUS3_HEAL_BLOCK))
+            {
+                gBattlerAbility = gBattlerAttacker;
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+                gBattleMoveDamage *= -1;
+            }
+            else if (!IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_SHADOW)
+                && ability != ABILITY_SHADOW_BODY
                 && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
                 && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES)
             {

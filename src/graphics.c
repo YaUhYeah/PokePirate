@@ -1546,6 +1546,8 @@ const u32 gBattleAnimBgTilemap_ZMoveMountain[] = INCBIN_U32("graphics/battle_ani
 const u32 gBattleAnimSpritePal_SteelBeam[] = INCBIN_U32("graphics/battle_anims/sprites/new/steel_beam.gbapal.lz");
 const u32 gBattleAnimBgPalette_SteelBeam[] = INCBIN_U32("graphics/battle_anims/backgrounds/new/steel_beam_bg.gbapal.lz");
 
+const u32 gBattleAnimBgPalette_ShadowStorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/new/shadowstorm.gbapal.lz");
+
 // misc
 const u32 gBerryBlenderCenter_Gfx[] = INCBIN_U32("graphics/berry_blender/center.8bpp.lz");
 const u32 gBerryBlenderOuter_Gfx[] = INCBIN_U32("graphics/berry_blender/outer.4bpp.lz");
@@ -1630,6 +1632,8 @@ const u32 gSummaryPage_Skills_Tilemap[]       = INCBIN_U32("graphics/summary_scr
 const u32 gSummaryPage_BattleMoves_Tilemap[]  = INCBIN_U32("graphics/summary_screen/page_battle_moves.bin.lz");
 const u32 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_contest_moves.bin.lz");
 const u32 gSummaryPage_InfoEgg_Tilemap[]      = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.lz");
+// Shadow Tiles/Pal
+const u32 gSummaryShadow_Pal[]                = INCBIN_U32("graphics/summary_screen/shadow.gbapal.lz");
 
 const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/bag_male.4bpp.lz");
 const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/bag/bag_female.4bpp.lz");

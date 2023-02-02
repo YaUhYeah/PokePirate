@@ -611,6 +611,9 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
         battleMon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
         battleMon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
         battleMon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
+        // Shadow Request
+        battleMon.shadow = GetMonData(&gEnemyParty[monId], MON_DATA_SHADOW);
+        //
         battleMon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
         GetMonData(&gEnemyParty[monId], MON_DATA_NICKNAME, nickname);
         StringCopy_Nickname(battleMon.nickname, nickname);
@@ -662,6 +665,11 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
     case REQUEST_PPMOVE3_BATTLE:
     case REQUEST_PPMOVE4_BATTLE:
         dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + gBattleResources->bufferA[gActiveBattler][1] - REQUEST_PPMOVE1_BATTLE);
+        size = 1;
+        break;
+    // Shadow Request
+    case REQUEST_SHADOW_BATTLE:
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SHADOW);
         size = 1;
         break;
     case REQUEST_OTID_BATTLE:
@@ -956,6 +964,8 @@ static void SetOpponentMonData(u8 monId)
             SetMonData(&gEnemyParty[monId], MON_DATA_SPEED, &battlePokemon->speed);
             SetMonData(&gEnemyParty[monId], MON_DATA_SPATK, &battlePokemon->spAttack);
             SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF, &battlePokemon->spDefense);
+            // Shadow Mon Data
+            SetMonData(&gEnemyParty[monId], MON_DATA_SHADOW, &battlePokemon->shadow);
         }
         break;
     case REQUEST_SPECIES_BATTLE:
@@ -990,6 +1000,9 @@ static void SetOpponentMonData(u8 monId)
     case REQUEST_PPMOVE3_BATTLE:
     case REQUEST_PPMOVE4_BATTLE:
         SetMonData(&gEnemyParty[monId], MON_DATA_PP1 + gBattleResources->bufferA[gActiveBattler][1] - REQUEST_PPMOVE1_BATTLE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SHADOW_BATTLE:
+        SetMonData(&gEnemyParty[monId], MON_DATA_SHADOW, &gBattleResources->bufferA[gActiveBattler][3]);
         break;
     case REQUEST_OTID_BATTLE:
         SetMonData(&gEnemyParty[monId], MON_DATA_OT_ID, &gBattleResources->bufferA[gActiveBattler][3]);
