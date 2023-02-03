@@ -2598,6 +2598,7 @@ static void MoveBattleBarGraphically(u8 battlerId, u8 whichBar)
         }
         break;
     case HEART_GAUGE:
+    {
         u16 hVal = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]], MON_DATA_HEART_VALUE);
         CalcBarFilledPixels(gBattleSpritesDataPtr->battleBars[battlerId].maxValue,
                     gBattleSpritesDataPtr->battleBars[battlerId].oldValue,
@@ -2628,6 +2629,7 @@ static void MoveBattleBarGraphically(u8 battlerId, u8 whichBar)
                 CpuCopy32(GetHealthboxElementGfxPtr(shadowBarSwap) + array[i] * 32,
                     (void *)(OBJ_VRAM0 + 0xB80 + (i + gSprites[gBattleSpritesDataPtr->battleBars[battlerId].healthboxSpriteId].oam.tileNum) * TILE_SIZE_4BPP), 32);
         }
+    }
         break;
     }
 }
