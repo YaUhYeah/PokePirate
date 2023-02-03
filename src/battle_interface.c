@@ -2421,9 +2421,9 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
             else
             {
                 exp = GetMonData(mon, MON_DATA_EXP);
-                currLevelExp = gExperienceTables[gBaseStats[species].growthRate][level];
+                currLevelExp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
                 currExpBarValue = exp - currLevelExp;
-                maxExpBarValue = gExperienceTables[gBaseStats[species].growthRate][level + 1] - currLevelExp;\
+                maxExpBarValue = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1] - currLevelExp;\
                 whichBar = EXP_BAR;
             }
             
@@ -2496,10 +2496,10 @@ s32 MoveBattleBar(u8 battlerId, u8 healthboxSpriteId, u8 whichBar, u8 unused)
         if (heartFraction == 0)
             heartFraction = 1;
 
-        //DebugPrintf("old %d, received %d, maxval %d", 
+        /* DebugPrintf("old %d, received %d, maxval %d", 
         gBattleSpritesDataPtr->battleBars[battlerId].oldValue,
         gBattleSpritesDataPtr->battleBars[battlerId].receivedValue,
-        gBattleSpritesDataPtr->battleBars[battlerId].maxValue);
+        gBattleSpritesDataPtr->battleBars[battlerId].maxValue); */
 
         heartFraction = abs(gBattleSpritesDataPtr->battleBars[battlerId].receivedValue / heartFraction);
 

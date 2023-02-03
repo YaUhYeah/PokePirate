@@ -4166,7 +4166,7 @@ u8 GetLevelFromMonExp(struct Pokemon *mon)
     if (GetMonData(mon, MON_DATA_IS_SHADOW, NULL))
         return GetMonData(mon, MON_DATA_MET_LEVEL, NULL);
 
-    while (level <= MAX_LEVEL && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= MAX_LEVEL && gExperienceTables[gSpeciesInfo[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -4731,11 +4731,9 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
             data[retVal++] = EXT_CTRL_CODE_ENG;
             data[retVal] = EOS;
         }
-        else
+        else if (substruct3->isShadow == TRUE)
         {
-            if (substruct3->isShadow == TRUE)
-            {
-                for (retVal = 0;
+            for (retVal = 0;
                 retVal < POKEMON_NAME_LENGTH;
                 data[retVal] = gSpeciesNames[GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL)][retVal], retVal++){}
 
@@ -4745,7 +4743,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         {
             for (retVal = 0;
                 retVal < POKEMON_NAME_LENGTH;
-                data[retVal] = boxMon->nickname[retVal], retVal++){}
+                data[retVal] = boxMon->nickData.nickname[retVal], retVal++){}
 
             data[retVal] = EOS;
         }
@@ -5142,7 +5140,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         else
         {
             for (i = 0; i < POKEMON_NAME_LENGTH; i++)
-            boxMon->nickData.nickname[i] = data[i];
+                boxMon->nickData.nickname[i] = data[i];
             break;
         } 
     }
