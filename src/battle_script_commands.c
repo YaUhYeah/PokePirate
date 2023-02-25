@@ -11154,13 +11154,13 @@ static void Cmd_various(void)
     }
     case VARIOUS_MODIFY_HEART_VALUE:
     {
+        VARIOUS_ARGS(s32 amount);
         switch (gBattleScripting.heartValueState)
         {
             case 0:
             {
                 if (!gBattleControllerExecFlags)
                 {
-                s32 amount = T1_READ_32(gBattlescriptCurrInstr + 3);
                 if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                 {
                     if (gBattlerPartyIndexes[2] == gActiveBattler && !(gAbsentBattlerFlags & gBitTable[2]))
@@ -11178,8 +11178,8 @@ static void Cmd_various(void)
                     gActiveBattler = 0;
                 }
         
-                gBattleMons[gActiveBattler].heartVal += amount;
-                BtlController_EmitHeartValueUpdate(BUFFER_A, gBattlerPartyIndexes[gActiveBattler], amount);
+                gBattleMons[gActiveBattler].heartVal += cmd->amount;
+                BtlController_EmitHeartValueUpdate(BUFFER_A, gBattlerPartyIndexes[gActiveBattler], cmd->amount);
                 MarkBattlerForControllerExec(gActiveBattler);
 
                 gBattleScripting.heartValueState++;
@@ -11199,7 +11199,7 @@ static void Cmd_various(void)
             }
             case 2:
             {
-                gBattlescriptCurrInstr += 7;
+                gBattlescriptCurrInstr = cmd->nextInstr;
             }
         }
         return;
