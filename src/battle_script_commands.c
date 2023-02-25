@@ -11161,23 +11161,23 @@ static void Cmd_various(void)
             {
                 if (!gBattleControllerExecFlags)
                 {
-                if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-                {
-                    if (gBattlerPartyIndexes[2] == gActiveBattler && !(gAbsentBattlerFlags & gBitTable[2]))
-                        gActiveBattler = 2;
-                    else
+                    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                     {
-                        if (!(gAbsentBattlerFlags & gBitTable[0]))
-                            gActiveBattler = 0;
-                        else
+                        if (gBattlerPartyIndexes[2] == gActiveBattler && !(gAbsentBattlerFlags & gBitTable[2]))
                             gActiveBattler = 2;
+                        else
+                        {
+                            if (!(gAbsentBattlerFlags & gBitTable[0]))
+                                gActiveBattler = 0;
+                            else
+                                gActiveBattler = 2;
+                        }
                     }
-                }
                 else
                 {
                     gActiveBattler = 0;
                 }
-        
+
                 gBattleMons[gActiveBattler].heartVal += cmd->amount;
                 BtlController_EmitHeartValueUpdate(BUFFER_A, gBattlerPartyIndexes[gActiveBattler], cmd->amount);
                 MarkBattlerForControllerExec(gActiveBattler);

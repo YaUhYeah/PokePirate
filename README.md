@@ -2,7 +2,7 @@
 This repo implements Shadow Pokemon. It requires (and is built upon) the RHH Expansion.
 
 ## Preface
-I'm still on hiatus from GBA dev in general (as of Feb. 2nd, 2023, when I'm writing this) but several people expressed interest in working on this project, so I cleaned it up a little and uploaded it to this repo. feel free to open issues and PRs/drafts for bugs and ideas. can't promise I'll be super active with checking them out, but I'm probably going to give Ed and maybe some others access to manage the repo and push things through. 
+I'm still on hiatus from GBA dev in general (as of Feb. 2nd, 2023, when I'm writing this) but several people expressed interest in working on this project, so I cleaned it up a little and uploaded it to this repo. feel free to open issues and PRs/drafts for bugs and ideas. can't promise I'll be super active with checking them out, but I'm probably going to give Ed and maybe some others access to manage the repo and push things through.
 
 this'll be a rough/messy readme for the time being, just getting some notes out there for those that are interested in contributing or anyone who's curious on how this generally works. this is long, but probably isn't complete - just an overview and some details on why certain changes exist. feel free to skip straight to the diff and come back here if you aren't sure what's going on
 
@@ -76,15 +76,15 @@ todo:
 this one's kinda big
 
 there's 4 new fields in the `BoxPokemon` struct: `isShadow, `isReverse`, `heartValue`, and `heartMax`
-but fear not: they take up no additional space! they also replace nothing! how, you may be asking? 
+but fear not: they take up no additional space! they also replace nothing! how, you may be asking?
 
 ***unions*** (don't call your HR manager!)
 
-`NicknameShadowdata` is a union that's placed into the space where the nickname field used to be. since shadow pokemon can't have a nickname until they're purified (and at that point, they don't require shadow pokemon data) we can actually hotswap out the nickname for the shadow data without taking up any additional space. the nickname field was 10 bytes long (10 character limit) so that gives us quite a bit of space to work with. as it stands currently, `isReverse` is a u8 while `heartValue` and `heartMax` are both u16, so that leaves 5 additional unused bytes to play with, should this project (or any others that extend it) require it. 
+`NicknameShadowdata` is a union that's placed into the space where the nickname field used to be. since shadow pokemon can't have a nickname until they're purified (and at that point, they don't require shadow pokemon data) we can actually hotswap out the nickname for the shadow data without taking up any additional space. the nickname field was 10 bytes long (10 character limit) so that gives us quite a bit of space to work with. as it stands currently, `isReverse` is a u8 while `heartValue` and `heartMax` are both u16, so that leaves 5 additional unused bytes to play with, should this project (or any others that extend it) require it.
 
 you may be asking, "what about `isShadow`?" and that's a great question! it's actually not in the union - it's in `PokemonSubstruct3`, as a bitfield - replacing `eventLegal`. there may be "cleaner" places to put this bitfield, but I think `eventLegal` won't be missed by many - it's useless. I removed or commented out all relevant functionality tied to the field, should be pretty clean.
 
-you might also ask, "why not just put it in the nickname union? or use `heartMax` to determine if a mon is shadow or not?" 
+you might also ask, "why not just put it in the nickname union? or use `heartMax` to determine if a mon is shadow or not?"
 
 I found that it helps to have `isShadow` outside the union for checks, because if you call what'd normally be `isShadow` (or try to see if heartMax is 0, etc.) while it's in nickname mode, you're obviously going to get nickname characters instead. that, and it might be useful to keep it true after purification to determine whether a mon is a purified shadow mon or just a normal mon, since it loses all other shadow data post-purification
 
@@ -102,7 +102,7 @@ some actual additions were made to the `summary_screen` tileset in previously bl
 ### Healthbox Split
 basically, the vanilla healthbox uses the same palette tag for all 4 healthboxes. undoing this took a lot of lot of time, and I ended up having to track down a lot of bugs regarding this stuff, but it should be fully stable and functional now.
 
-I say "all 4" because this is set up for double battles as well - if a mon is shadow, it'll set its healthbox palette to a different color. if it's the player's mon in a single battle, the healthbox changes drastically, with the EXP bar replaced with the Heart Gauge and so on. it works pretty nicely, I tested a lot of cases but I could have missed some - I didn't go far beyond normal single and double battles 
+I say "all 4" because this is set up for double battles as well - if a mon is shadow, it'll set its healthbox palette to a different color. if it's the player's mon in a single battle, the healthbox changes drastically, with the EXP bar replaced with the Heart Gauge and so on. it works pretty nicely, I tested a lot of cases but I could have missed some - I didn't go far beyond normal single and double battles
 
 ## Trainers & Testing
 in trainers.h there's `F_TRAINER_PARTY_SHADOW_TEST`. this ties in with `TrainerMonNoItemDefaultMovesShadow`, which was the only type I implemented so far. there should probably be shadow versions of all the vanilla constructors eventually, to allow custom moves/items/etc. but basically, it just passes in whether or not a given mon in the trainer party is shadow, and what the starting heart gauge value/max should be. the heart gauge value passed in should probably be evenly divisible by 100 like the gamecube games handle it, but it's not enforced by code (nor should it be, I guess - go wild)
