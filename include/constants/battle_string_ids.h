@@ -638,12 +638,15 @@
 #define STRINGID_ELECTRICTERRAINACTIVATEDABILITY      636
 #define STRINGID_ABILITYWEAKENEDFSURROUNDINGMONSSTAT  637
 #define STRINGID_ATTACKERGAINEDSTRENGTHFROMTHEFALLEN  638
-#define STRINGID_SHADOWPKMNNOTICE                     639
-#define STRINGID_TRAINERCALLTOMON                     640
-#define STRINGID_PKMNSTOREDEXP                        641
-#define STRINGID_PKMNHEARTGAUGEUPDATE                 642
+#define STRINGID_PKMNSABILITYPREVENTSABILITY          639
+#define STRINGID_PREPARESHELLTRAP                     640
+#define STRINGID_SHELLTRAPDIDNTWORK                   641
+#define STRINGID_SHADOWPKMNNOTICE                     642
+#define STRINGID_TRAINERCALLTOMON                     643
+#define STRINGID_PKMNSTOREDEXP                        644
+#define STRINGID_PKMNHEARTGAUGEUPDATE                 645
 
-#define BATTLESTRINGS_COUNT                           643
+#define BATTLESTRINGS_COUNT                           646
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,
@@ -744,7 +747,6 @@
 // gUproarAwakeStringIds
 #define B_MSG_CANT_SLEEP_UPROAR  0
 #define B_MSG_UPROAR_KEPT_AWAKE  1
-#define B_MSG_STAYED_AWAKE_USING 2
 
 // gUproarOverTurnStringIds
 #define B_MSG_UPROAR_CONTINUES  0
