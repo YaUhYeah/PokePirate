@@ -8781,13 +8781,9 @@ u8 ShdwCanMonGainEXP(struct Pokemon *mon)
 {
     u16 hVal = GetMonData(mon, MON_DATA_HEART_VALUE, NULL);
     u16 hMax = GetMonData(mon, MON_DATA_HEART_MAX, NULL);
-    if (GetMonData(mon, MON_DATA_IS_SHADOW, NULL))
-        if (GetHeartGaugeSection(hVal, hMax) < 3)
-            return TRUE;
-        else
-            return FALSE;
-    else
-        return TRUE;
+    if (GetMonData(mon, MON_DATA_IS_SHADOW, NULL) && GetHeartGaugeSection(hVal, hMax) >= 3)
+        return FALSE;
+    return TRUE;
 }
 
 void ModifyHeartValue(void)
