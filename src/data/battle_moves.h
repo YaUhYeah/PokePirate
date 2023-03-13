@@ -14086,4 +14086,274 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .split = SPLIT_PHYSICAL,
         .zMoveEffect = 0
     },
+    // Shadow Moves
+    [MOVE_SHADOW_BLITZ] =
+    {
+        .effect = EFFECT_HIT,
+        .power = 40,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 60,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = 0
+    },
+
+    [MOVE_SHADOW_WAVE] =
+    {
+        .effect = EFFECT_HIT,
+        .power = 50,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 60,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = 0
+    },
+
+    [MOVE_SHADOW_RUSH] =
+    {
+        .effect = EFFECT_HIT,
+        .power = 55,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 60,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = 0
+    },
+
+    [MOVE_SHADOW_RAVE] =
+    {
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 60,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = 0
+    },
+
+    [MOVE_SHADOW_FIRE] =
+    {
+        .power = 75,
+        .effect = EFFECT_BURN_HIT,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 25,
+        .secondaryEffectChance = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_SHEER_FORCE_BOOST,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_CHILL] =
+    {
+        .power = 75,
+        .effect = EFFECT_FREEZE_HIT,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 25,
+        .secondaryEffectChance = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_SHEER_FORCE_BOOST,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_BOLT] =
+    {
+        .power = 75,
+        .effect = EFFECT_PARALYZE_HIT,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 25,
+        .secondaryEffectChance = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_SHEER_FORCE_BOOST,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_STORM] =
+    {
+        .power = 95,
+        .effect = EFFECT_PARALYZE_HIT,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 25,
+        .secondaryEffectChance = 10,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_BLAST] =
+    {
+        .effect = EFFECT_HIT,
+        .power = 80,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 15,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED | FLAG_HIGH_CRIT,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_BREAK] =
+    {
+        .effect = EFFECT_HIT,
+        .power = 75,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 60,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = 0
+    },
+
+    [MOVE_SHADOW_END] =
+    {
+        .effect = EFFECT_RECOIL_33,
+        .power = 120,
+        .type = TYPE_SHADOW,
+        .accuracy = 60,
+        .pp = 40,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED | FLAG_RECKLESS_BOOST,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_DOWN] =
+    {
+        .effect = EFFECT_DEFENSE_DOWN_2,
+        .power = 0,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 40,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MAGIC_COAT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
+        .split = SPLIT_STATUS,
+        .zMoveEffect = Z_EFFECT_ATK_UP_2,
+    },
+
+    [MOVE_SHADOW_HALF] =
+    {
+        .effect = EFFECT_SHADOW_HALF,
+        .power = 1,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 10,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_FOES_AND_ALLY,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
+    [MOVE_SHADOW_MIST] =
+    {
+        .effect = EFFECT_EVASION_DOWN_2,
+        .power = 0,
+        .type = TYPE_SHADOW,
+        .accuracy = 0,
+        .pp = 30,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .flags = FLAG_SNATCH_AFFECTED,
+        .split = SPLIT_STATUS,
+        .zMoveEffect = Z_EFFECT_RECOVER_HP,
+    },
+
+    [MOVE_SHADOW_SHED] =
+    {
+        .effect = EFFECT_BRICK_BREAK,
+        .power = 0,
+        .type = TYPE_SHADOW,
+        .accuracy = 0,
+        .pp = 30,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_SNATCH_AFFECTED,
+        .split = SPLIT_STATUS,
+        .zMoveEffect = Z_EFFECT_RECOVER_HP,
+    },
+
+    [MOVE_SHADOW_HOLD] =
+    {
+        .flags = FLAG_MAGIC_COAT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
+        .effect = EFFECT_MEAN_LOOK,
+        .power = 0,
+        .type = TYPE_SHADOW,
+        .accuracy = 100,
+        .pp = 15,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .split = SPLIT_STATUS,
+        .zMoveEffect = Z_EFFECT_SPDEF_UP_1,
+    },
+
+    [MOVE_SHADOW_PANIC] =
+    {
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_DANCE,
+        .effect = EFFECT_TEETER_DANCE,
+        .power = 0,
+        .type = TYPE_SHADOW,
+        .accuracy = 80,
+        .pp = 20,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .split = SPLIT_STATUS,
+        .zMoveEffect = Z_EFFECT_SPATK_UP_1,
+    },
+
+    [MOVE_SHADOW_SKY] =
+    {
+        .effect = EFFECT_SHADOW_SKY,
+        .power = 0,
+        .type = TYPE_SHADOW,
+        .accuracy = 0,
+        .pp = 5,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_ALL_BATTLERS,
+        .priority = 0,
+        .flags = 0,
+        .split = SPLIT_STATUS,
+        .zMoveEffect = Z_EFFECT_SPD_UP_1,
+    },
 };

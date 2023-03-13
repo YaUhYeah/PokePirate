@@ -261,6 +261,7 @@
 #define VARIOUS_HIT_SWITCH_TARGET_FAILED            168
 #define VARIOUS_JUMP_IF_SHELL_TRAP                  169
 #define VARIOUS_MODIFY_HEART_VALUE                  170
+#define VARIOUS_SET_SHADOW_SKY                      171
 
 // Cmd_manipulatedamage
 #define DMG_CHANGE_SIGN            0

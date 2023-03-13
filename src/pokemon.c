@@ -7383,7 +7383,7 @@ void RandomlyGivePartyPokerus(struct Pokemon *party)
             rnd2 &= 0xF3;
             rnd2++;
 
-            SetMonData(&party[rnd], MON_DATA_POKERUS, &rnd2);
+            SetMonData(&party[rnd], MON_DATA_IS_SHADOW, &rnd2);
         }
     }
 }
@@ -7409,6 +7409,35 @@ u8 CheckPartyPokerus(struct Pokemon *party, u8 selection)
         while (selection);
     }
     else if (GetMonData(&party[0], MON_DATA_POKERUS, 0) & 0xF)
+    {
+        retVal = 1;
+    }
+
+    return retVal;
+}
+
+// Check if Shadow Pokemon
+u8 CheckPartyShadow(struct Pokemon *party, u8 selection)
+{
+    u8 retVal;
+
+    int partyIndex = 0;
+    unsigned curBit = 1;
+    retVal = 0;
+
+    if (selection)
+    {
+        do
+        {
+            if ((selection & 1) && (GetMonData(&party[partyIndex], MON_DATA_IS_SHADOW, 0) & 0xF))
+                retVal |= curBit;
+            partyIndex++;
+            curBit <<= 1;
+            selection >>= 1;
+        }
+        while (selection);
+    }
+    else if (GetMonData(&party[0], MON_DATA_IS_SHADOW, 0) & 0xF)
     {
         retVal = 1;
     }

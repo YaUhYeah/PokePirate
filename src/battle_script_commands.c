@@ -5101,7 +5101,8 @@ static void Cmd_playanimation(void)
     else if (animId == B_ANIM_RAIN_CONTINUES
           || animId == B_ANIM_SUN_CONTINUES
           || animId == B_ANIM_SANDSTORM_CONTINUES
-          || animId == B_ANIM_HAIL_CONTINUES)
+          || animId == B_ANIM_HAIL_CONTINUES
+          || animId == B_ANIM_SHADOW_SKY_CONTINUES)
     {
         BtlController_EmitBattleAnimation(BUFFER_A, animId, *argPtr);
         MarkBattlerForControllerExec(gActiveBattler);
@@ -5150,7 +5151,8 @@ static void Cmd_playanimation_var(void)
     else if (*animIdPtr == B_ANIM_RAIN_CONTINUES
           || *animIdPtr == B_ANIM_SUN_CONTINUES
           || *animIdPtr == B_ANIM_SANDSTORM_CONTINUES
-          || *animIdPtr == B_ANIM_HAIL_CONTINUES)
+          || *animIdPtr == B_ANIM_HAIL_CONTINUES
+          || *animIdPtr == B_ANIM_SHADOW_SKY_CONTINUES)
     {
         BtlController_EmitBattleAnimation(BUFFER_A, *animIdPtr, *argPtr);
         MarkBattlerForControllerExec(gActiveBattler);
@@ -11240,6 +11242,22 @@ static void Cmd_various(void)
         }
         return;
     }
+    case VARIOUS_SET_SHADOW_SKY:
+    {
+        VARIOUS_ARGS();
+        if (!TryChangeBattleWeather(gBattlerAttacker, ENUM_WEATHER_SHADOW_SKY, FALSE))
+        {
+            gMoveResultFlags |= MOVE_RESULT_MISSED;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SHADOW_SKY;
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
+        else
+        {
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_SHADOW_SKY;
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
+	    return;
+    }
     } // End of switch (cmd->id)
 
     gBattlescriptCurrInstr = cmd->nextInstr;
@@ -12728,6 +12746,17 @@ static void Cmd_weatherdamage(void)
                 && ability != ABILITY_SNOW_CLOAK
                 && ability != ABILITY_OVERCOAT
                 && ability != ABILITY_ICE_BODY
+                && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
+                && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES)
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+            }
+        }
+        if (gBattleWeather & B_WEATHER_SHADOW_SKY)
+        {
+            if (!IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_SHADOW)
                 && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
                 && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES)
             {

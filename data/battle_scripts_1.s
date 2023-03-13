@@ -418,6 +418,8 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectTeatime                 @ EFFECT_TEATIME
 	.4byte BattleScript_EffectAttackUpUserAlly        @ EFFECT_ATTACK_UP_USER_ALLY
 	.4byte BattleScript_EffectShellTrap				  @ EFFECT_SHELL_TRAP
+	.4byte BattleScript_EffectShadowHalf			  @ EFFECT_SHADOW_HALF
+	.4byte BattleScript_EffectShadowSky				  @ EFFECT_SHADOW_SKY
 
 BattleScript_EffectAttackUpUserAlly:
 	jumpifnoally BS_ATTACKER, BattleScript_EffectAttackUp
@@ -571,6 +573,17 @@ BattleScript_EffectShellTrap::
 	printstring STRINGID_SHELLTRAPDIDNTWORK
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+
+BattleScript_EffectShadowHalf::
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc
+	bichalfword gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	call BattleScript_SteelBeamSelfDamage
+	damagetohalftargethp
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectSteelBeam::
 	attackcanceler
@@ -5637,6 +5650,13 @@ BattleScript_EffectHail::
 	sethail
 	goto BattleScript_MoveWeatherChange
 
+BattleScript_EffectShadowSky::
+	attackcanceler
+	attackstring
+	ppreduce
+	setshadowsky BattleScript_ButItFailed
+	goto BattleScript_MoveWeatherChange
+
 BattleScript_EffectTorment::
 	attackcanceler
 	attackstring
@@ -6829,6 +6849,44 @@ BattleScript_SunlightFaded::
 	printstring STRINGID_SUNLIGHTFADED
 	waitmessage B_WAIT_TIME_LONG
 	end2
+
+BattleScript_ShadowSkyContinues::
+	printstring STRINGID_SHADOW_SKYCONTINUES
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_ATTACKER, B_ANIM_SHADOW_SKY_CONTINUES
+	goto BattleScript_ShadowSkyLoop
+BattleScript_ShadowSkyLoop::
+	copyarraywithindex gBattlerAttacker, gBattlerByTurnOrder, gBattleCommunication, 1
+	weatherdamage
+	jumpifword CMP_EQUAL, gBattleMoveDamage, 0, BattleScript_ShadowSkyLoopIncrement
+	jumpifword CMP_COMMON_BITS gBattleMoveDamage, 1 << 31, BattleScript_ShadowSkyHeal
+	printstring STRINGID_SHADOW_SKYDAMAGE
+	waitmessage B_WAIT_TIME_LONG
+	effectivenesssound
+	hitanimation BS_ATTACKER
+	goto BattleScript_ShadowSkyHpChange
+BattleScript_ShadowSkyHeal:
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_ICEBODYHPGAIN
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_ShadowSkyHpChange:
+	orword gHitMarker, HITMARKER_SKIP_DMG_TRACK | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_DAMAGE | HITMARKER_GRUDGE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	tryfaintmon BS_ATTACKER
+	checkteamslost BattleScript_ShadowSkyLoopIncrement
+BattleScript_ShadowSkyLoopIncrement::
+	jumpifbyte CMP_NOT_EQUAL, gBattleOutcome, 0, BattleScript_ShadowSkyContinuesEnd
+	addbyte gBattleCommunication, 1
+	jumpifbytenotequal gBattleCommunication, gBattlersCount, BattleScript_ShadowSkyLoop
+BattleScript_ShadowSkyContinuesEnd::
+	bicword gHitMarker, HITMARKER_SKIP_DMG_TRACK | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_DAMAGE | HITMARKER_GRUDGE
+	end2
+
+BattleScript_ShadowSkyEnd::
+	printstring STRINGID_SHADOW_SKYSTOPPED
+	waitmessage B_WAIT_TIME_LONG
+	call BattleScript_WeatherFormChanges
 
 BattleScript_OverworldWeatherStarts::
 	printfromtable gWeatherStartsStringIds
@@ -8418,7 +8476,7 @@ BattleScript_SpeedBoostActivates::
 	waitmessage B_WAIT_TIME_LONG
 	end3
 
-@ Can't compare directly to a value, have to compare to value at pointer
+@ Cant compare directly to a value, have to compare to value at pointer
 sZero:
 .byte 0
 

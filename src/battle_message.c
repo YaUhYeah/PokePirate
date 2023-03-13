@@ -442,6 +442,10 @@ static const u8 sText_SpAttack[] = _("sp. attack");
 static const u8 sText_SpDefense[] = _("sp. defense");
 static const u8 sText_Accuracy[] = _("accuracy");
 static const u8 sText_Evasiveness[] = _("evasiveness");
+static const u8 sText_StartedShadowSky[] = _("A shadowy aura filled\nthe sky!");
+static const u8 sText_ShadowSkyContinues[] = _("Bursts of light showered\nfrom the shadowy aura!");
+static const u8 sText_ShadowSkyStopped[] = _("The shadowy aura faded away!");
+static const u8 sText_ShadowSkyDamage[] = _("The flashing light strikes\n{B_ATK_NAME_WITH_PREFIX}!");
 
 const u8 *const gStatNamesTable[NUM_BATTLE_STATS] =
 {
@@ -1428,6 +1432,10 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_TRAINERCALLTOMON - BATTLESTRINGS_TABLE_START] = sText_TrainerCallToMon,
     [STRINGID_PKMNSTOREDEXP - BATTLESTRINGS_TABLE_START] = sText_PkmnStoredEXP,
     [STRINGID_PKMNHEARTGAUGEUPDATE - BATTLESTRINGS_TABLE_START] = sText_PkmnHeartValueUpdate,
+    [STRINGID_STARTEDSHADOW_SKY - BATTLESTRINGS_TABLE_START] = sText_StartedShadowSky,
+    [STRINGID_SHADOW_SKYCONTINUES - BATTLESTRINGS_TABLE_START] = sText_ShadowSkyContinues,
+    [STRINGID_SHADOW_SKYSTOPPED - BATTLESTRINGS_TABLE_START] = sText_ShadowSkyStopped,
+    [STRINGID_SHADOW_SKYDAMAGE - BATTLESTRINGS_TABLE_START] = sText_ShadowSkyDamage,
 };
 
 const u16 gZEffectStringIds[] =
@@ -1527,30 +1535,34 @@ const u16 gNoEscapeStringIds[] =
 
 const u16 gMoveWeatherChangeStringIds[] =
 {
-    [B_MSG_STARTED_RAIN]      = STRINGID_STARTEDTORAIN,
-    [B_MSG_STARTED_DOWNPOUR]  = STRINGID_DOWNPOURSTARTED, // Unused
-    [B_MSG_WEATHER_FAILED]    = STRINGID_BUTITFAILED,
-    [B_MSG_STARTED_SANDSTORM] = STRINGID_SANDSTORMBREWED,
-    [B_MSG_STARTED_SUNLIGHT]  = STRINGID_SUNLIGHTGOTBRIGHT,
-    [B_MSG_STARTED_HAIL]      = STRINGID_STARTEDHAIL,
+    [B_MSG_STARTED_RAIN]        = STRINGID_STARTEDTORAIN,
+    [B_MSG_STARTED_DOWNPOUR]    = STRINGID_DOWNPOURSTARTED, // Unused
+    [B_MSG_WEATHER_FAILED]      = STRINGID_BUTITFAILED,
+    [B_MSG_STARTED_SANDSTORM]   = STRINGID_SANDSTORMBREWED,
+    [B_MSG_STARTED_SUNLIGHT]    = STRINGID_SUNLIGHTGOTBRIGHT,
+    [B_MSG_STARTED_HAIL]        = STRINGID_STARTEDHAIL,
+    [B_MSG_STARTED_SHADOW_SKY]  = STRINGID_STARTEDSHADOW_SKY,
 };
 
 const u16 gSandStormHailContinuesStringIds[] =
 {
-    [B_MSG_SANDSTORM] = STRINGID_SANDSTORMRAGES,
-    [B_MSG_HAIL]      = STRINGID_HAILCONTINUES
+    [B_MSG_SANDSTORM]   = STRINGID_SANDSTORMRAGES,
+    [B_MSG_HAIL]        = STRINGID_HAILCONTINUES,
+    [B_MSG_SHADOW_SKY]  = STRINGID_SHADOW_SKYCONTINUES
 };
 
 const u16 gSandStormHailDmgStringIds[] =
 {
-    [B_MSG_SANDSTORM] = STRINGID_PKMNBUFFETEDBYSANDSTORM,
-    [B_MSG_HAIL]      = STRINGID_PKMNPELTEDBYHAIL
+    [B_MSG_SANDSTORM]   = STRINGID_PKMNBUFFETEDBYSANDSTORM,
+    [B_MSG_HAIL]        = STRINGID_PKMNPELTEDBYHAIL,
+    [B_MSG_SHADOW_SKY]  = STRINGID_SHADOW_SKYDAMAGE
 };
 
 const u16 gSandStormHailEndStringIds[] =
 {
-    [B_MSG_SANDSTORM] = STRINGID_SANDSTORMSUBSIDED,
-    [B_MSG_HAIL]      = STRINGID_HAILSTOPPED
+    [B_MSG_SANDSTORM]   = STRINGID_SANDSTORMSUBSIDED,
+    [B_MSG_HAIL]        = STRINGID_HAILSTOPPED,
+    [B_MSG_SHADOW_SKY]  = STRINGID_SHADOW_SKYSTOPPED
 };
 
 const u16 gRainContinuesStringIds[] =
@@ -1970,6 +1982,7 @@ static const u8 sATypeMove_Table[NUMBER_OF_MON_TYPES][17] =
     [TYPE_DRAGON]   = _("a DRAGON move"),
     [TYPE_DARK]     = _("a DARK move"),
     [TYPE_FAIRY]    = _("a FAIRY move"),
+    [TYPE_SHADOW]   = _("a SHADOW move"),
 };
 
 const u8 gText_BattleTourney[] = _("BATTLE TOURNEY");

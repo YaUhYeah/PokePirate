@@ -891,6 +891,10 @@ static const union AnimCmd sSpriteAnim_TypeFairy[] = {
     ANIMCMD_FRAME(TYPE_FAIRY * 8, 0, FALSE, FALSE),
     ANIMCMD_END
 };
+static const union AnimCmd sSpriteAnim_TypeShadow[] = {
+    ANIMCMD_FRAME(TYPE_SHADOW * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
 static const union AnimCmd sSpriteAnim_CategoryCool[] = {
     ANIMCMD_FRAME((CONTEST_CATEGORY_COOL + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
     ANIMCMD_END
@@ -931,6 +935,7 @@ static const union AnimCmd *const sSpriteAnimTable_MoveTypes[NUMBER_OF_MON_TYPES
     sSpriteAnim_TypeDragon,
     sSpriteAnim_TypeDark,
     sSpriteAnim_TypeFairy,
+    sSpriteAnim_TypeShadow,
     sSpriteAnim_CategoryCool,
     sSpriteAnim_CategoryBeauty,
     sSpriteAnim_CategoryCute,
@@ -975,6 +980,7 @@ static const u8 sMoveTypeToOamPaletteNum[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIE
     [TYPE_DRAGON] = 15,
     [TYPE_DARK] = 13,
     [TYPE_FAIRY] = 14,
+    [TYPE_SHADOW] = 14,
     [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_COOL] = 13,
     [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_BEAUTY] = 14,
     [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_CUTE] = 14,
@@ -1115,6 +1121,10 @@ static const union AnimCmd sSpriteAnim_StatusFaint[] = {
     ANIMCMD_FRAME(24, 0, FALSE, FALSE),
     ANIMCMD_END
 };
+static const union AnimCmd sSpriteAnim_StatusShadow[] = {
+    ANIMCMD_FRAME(28, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
 static const union AnimCmd *const sSpriteAnimTable_StatusCondition[] = {
     sSpriteAnim_StatusPoison,
     sSpriteAnim_StatusParalyzed,
@@ -1123,6 +1133,7 @@ static const union AnimCmd *const sSpriteAnimTable_StatusCondition[] = {
     sSpriteAnim_StatusBurn,
     sSpriteAnim_StatusPokerus,
     sSpriteAnim_StatusFaint,
+    sSpriteAnim_StatusShadow,
 };
 static const struct CompressedSpriteSheet sStatusIconsSpriteSheet =
 {
@@ -1421,7 +1432,6 @@ static bool8 DecompressGraphics(void)
         break;
     case 6:
         LoadCompressedPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
-        LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
         sMonSummaryScreen->switchCounter++;
         break;
     case 7:
@@ -1699,6 +1709,16 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
                 ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
                 ScheduleBgCopyTilemapToVram(0);
                 HandleStatusTilemap(0, 2);
+            }
+            if (sMonSummaryScreen->summary.ailment != AILMENT_SHADOW)
+            {
+                LoadCompressedPalette(gSummaryShadow_Pal, 0, 0x100);
+                LoadPalette(&gPPTextPalette, 0x81, 0x1E);
+            }
+            else if (sMonSummaryScreen->summary.ailment == AILMENT_SHADOW)
+            {
+                LoadCompressedPalette(gSummaryScreen_Pal, 0, 0x100);
+                LoadPalette(&gPPTextPalette, 0x81, 0x1E);
             }
             sMonSummaryScreen->curMonIndex = monId;
             gTasks[taskId].data[0] = 0;

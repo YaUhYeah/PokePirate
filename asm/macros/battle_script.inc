@@ -2268,3 +2268,9 @@
 	.macro hitswitchtargetfailed
 	various 0, VARIOUS_HIT_SWITCH_TARGET_FAILED
 	.endm
+
+	.macro setshadowsky ptr:req
+	various BS_ATTACKER, VARIOUS_SET_SHADOW_SKY
+	.4byte \ptr
+	.endm
+

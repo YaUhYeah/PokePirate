@@ -462,6 +462,8 @@ extern const u8 BattleScript_CouldntFullyProtect[];
 extern const u8 BattleScript_MoveEffectStockpileWoreOff[];
 extern const u8 BattleScript_TrainerCallToMon[];
 extern const u8 BattleScript_TrainerCallToMonShadow[];
+extern const u8 BattleScript_ShadowSkyContinues[];
+extern const u8 BattleScript_ShadowSkyEnd[];
 
 // zmoves
 extern const u8 BattleScript_ZMoveActivateDamaging[];

@@ -112,7 +112,7 @@ struct PokemonSubstruct0
     /*0x08*/ u8 ppBonuses;
     /*0x09*/ u8 friendship;
     /*0x0A*/ u16 pokeball:5; //31 balls
-             u16 filler:11;
+    /*0x0B*/ u8 shadow;
 }; /* size = 12 */
 
 struct PokemonSubstruct1
@@ -591,5 +591,6 @@ u32 GetMonFriendshipScore(struct Pokemon *pokemon);
 void UpdateMonPersonality(struct BoxPokemon *boxMon, u32 personality);
 u8 GetHeartGaugeSection(u16 heartVal, u16 heartMax);
 u8 ShdwCanMonGainEXP(struct Pokemon *mon);
+u8 CheckPartyShadow(struct Pokemon *party, u8 selection);
 
 #endif // GUARD_POKEMON_H
