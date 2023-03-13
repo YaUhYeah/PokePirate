@@ -112,7 +112,7 @@ struct PokemonSubstruct0
     /*0x08*/ u8 ppBonuses;
     /*0x09*/ u8 friendship;
     /*0x0A*/ u16 pokeball:5; //31 balls
-    /*0x0B*/ u8 shadow;
+             u16 filler:11;
 }; /* size = 12 */
 
 struct PokemonSubstruct1
@@ -204,7 +204,7 @@ union PokemonSubstruct
     u16 raw[NUM_SUBSTRUCT_BYTES / 2]; // /2 because it's u16, not u8
 };
 
-union NicknameShadowdata
+union __attribute__((packed, aligned(2))) NicknameShadowdata
 {
     u8 nickname[POKEMON_NAME_LENGTH];
     struct Shadowdata
