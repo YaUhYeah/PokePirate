@@ -2225,15 +2225,15 @@ bool8 ScrCmd_lockfortrainer(struct ScriptContext *ctx)
     }
 }
 
-// This command will set a Pokémon's eventLegal bit; there is no similar command to clear it.
-bool8 ScrCmd_setmoneventlegal(struct ScriptContext *ctx)
+// This command will set a Pokémon's modernFatefulEncounter bit; there is no similar command to clear it.
+bool8 ScrCmd_setmonmodernfatefulencounter(struct ScriptContext *ctx)
 {
     return FALSE;
 }
 
-bool8 ScrCmd_checkmoneventlegal(struct ScriptContext *ctx)
+bool8 ScrCmd_checkmonmodernfatefulencounter(struct ScriptContext *ctx)
 {
-    return TRUE;
+    return FALSE;
 }
 
 bool8 ScrCmd_trywondercardscript(struct ScriptContext *ctx)

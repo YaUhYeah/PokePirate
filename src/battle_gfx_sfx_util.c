@@ -732,7 +732,9 @@ bool8 BattleLoadAllHealthBoxesGfx(u8 state)
     {
         if (state == 1)
         {
+            LoadSpritePalette(&gSpritePalettes_HealthBoxHealthBar[0]);
             LoadSpritePalette(&gSpritePalettes_HealthBoxHealthBar[1]);
+            MegaIndicator_LoadSpritesGfx();
         }
         else if (!IsDoubleBattle())
         {

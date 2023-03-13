@@ -252,6 +252,7 @@ struct AI_SavedBattleMon
     u16 moves[MAX_MON_MOVES];
     u16 heldItem;
     u16 species;
+    u8 types[3];
 };
 
 struct AiPartyMon
@@ -661,6 +662,7 @@ struct BattleStruct
     u8 battleBondTransformed[NUM_BATTLE_SIDES]; // Bitfield for each party.
     u8 storedHealingWish:4; // Each battler as a bit.
     u8 storedLunarDance:4; // Each battler as a bit.
+    u16 supremeOverlordModifier[MAX_BATTLERS_COUNT];
 };
 
 #define F_DYNAMIC_TYPE_1 (1 << 6)
@@ -853,7 +855,7 @@ struct MonSpritesGfx
         u8 *byte[MAX_BATTLERS_COUNT];
     } sprites;
     struct SpriteTemplate templates[MAX_BATTLERS_COUNT];
-    struct SpriteFrameImage frameImages[MAX_BATTLERS_COUNT][4];
+    struct SpriteFrameImage frameImages[MAX_BATTLERS_COUNT][MAX_MON_PIC_FRAMES];
     u8 unusedArr[0x80];
     u8 *barFontGfx;
     void *unusedPtr;
