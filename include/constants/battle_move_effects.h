@@ -399,10 +399,15 @@
 #define EFFECT_TEATIME                      393
 #define EFFECT_ATTACK_UP_USER_ALLY          394 // Howl 8th Gen
 #define EFFECT_SHELL_TRAP                   395
+#define EFFECT_PSYBLADE                     396
+#define EFFECT_HYDRO_STEAM                  397
+#define EFFECT_HIT_SET_ENTRY_HAZARD         398
+#define EFFECT_DIRE_CLAW                    399
+#define EFFECT_BARB_BARRAGE                 400
 //Shadow Move Effects
-#define EFFECT_SHADOW_HALF                  396
-#define EFFECT_SHADOW_SKY                   397
+#define EFFECT_SHADOW_HALF                  401
+#define EFFECT_SHADOW_SKY                   402
 
-#define NUM_BATTLE_MOVE_EFFECTS             396
+#define NUM_BATTLE_MOVE_EFFECTS             403
 
 #endif  // GUARD_CONSTANTS_BATTLE_MOVE_EFFECTS_H

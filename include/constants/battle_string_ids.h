@@ -265,8 +265,8 @@
 #define STRINGID_ITAPPEAREDCAUGHT                     264
 #define STRINGID_AARGHALMOSTHADIT                     265
 #define STRINGID_SHOOTSOCLOSE                         266
-#define STRINGID_GOTCHAPKMNCAUGHT                     267
-#define STRINGID_GOTCHAPKMNCAUGHT2                    268
+#define STRINGID_GOTCHAPKMNCAUGHTPLAYER               267
+#define STRINGID_GOTCHAPKMNCAUGHTWALLY                268
 #define STRINGID_GIVENICKNAMECAPTURED                 269
 #define STRINGID_PKMNSENTTOPC                         270
 #define STRINGID_PKMNDATAADDEDTODEX                   271
@@ -942,5 +942,11 @@
 #define B_MSG_Z_RECOVER_HP    4
 #define B_MSG_Z_STAT_UP       5
 #define B_MSG_Z_HP_TRAP       6
+
+// gDmgHazardsStringIds
+#define B_MSG_PKMNHURTBYSPIKES   0
+#define B_MSG_STEALTHROCKDMG     1
+#define B_MSG_POINTEDSTONESFLOAT 2
+#define B_MSG_SPIKESSCATTERED    3
 
 #endif // GUARD_CONSTANTS_BATTLE_STRING_IDS_H

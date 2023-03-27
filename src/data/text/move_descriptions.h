@@ -3236,6 +3236,14 @@ static const u8 sCombatTorqueDescription[] = _(
 static const u8 sMagicalTorqueDescription[] = _(
     "---");
 
+static const u8 sPsybladeDescription[] = _(
+    "This move's power increases\n"
+    "when on Electric Terrain.");
+
+static const u8 sHydroSteamDescription[] = _(
+    "This move's power increases\n"
+    "under harsh sunlight.");
+
 // Shadow Moves
 static const u8 sShadowBlitzDescription[] = _(
     "Tackles the opponent while\n"
@@ -4147,6 +4155,8 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_NOXIOUS_TORQUE - 1] = sNoxiousTorqueDescription,
     [MOVE_COMBAT_TORQUE - 1] = sCombatTorqueDescription,
     [MOVE_MAGICAL_TORQUE - 1] = sMagicalTorqueDescription,
+    [MOVE_PSYBLADE - 1] = sPsybladeDescription,
+    [MOVE_HYDRO_STEAM - 1] = sHydroSteamDescription,
     [MOVE_SHADOW_BLITZ - 1] = sShadowBlitzDescription,
     [MOVE_SHADOW_WAVE - 1] = sShadowWaveDescription,
     [MOVE_SHADOW_RUSH - 1] = sShadowRushDescription,
