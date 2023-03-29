@@ -1923,6 +1923,11 @@ static u32 GeneratePartyHash(const struct Trainer *trainer, u32 i)
         buffer = (const u8 *) &trainer->party.EverythingCustomized[i];
         n = sizeof(*trainer->party.EverythingCustomized);
     }
+    else if (trainer->partyFlags == F_TRAINER_PARTY_SHADOW_TEST)
+    {
+        buffer = (const u8 *) &trainer->party.NoItemDefaultMovesShadow[i];
+        n = sizeof(*trainer->party.NoItemDefaultMovesShadow);
+    }
     return Crc32B(buffer, n);
 }
 
