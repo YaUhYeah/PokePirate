@@ -533,8 +533,6 @@ const u8 *const gItemEffectTable[ITEMS_COUNT] =
     [ITEM_DIRE_HIT]           = gItemEffect_DireHit,
     [ITEM_GUARD_SPEC]         = gItemEffect_GuardSpec,
 
-    //[ITEM_MAX_MUSHROOMS]      = gItemEffect_MaxMushrooms, // Todo
-
     // Evolution Items
     [ITEM_FIRE_STONE]         = gItemEffect_EvoItem,
     [ITEM_WATER_STONE]        = gItemEffect_EvoItem,
@@ -552,10 +550,29 @@ const u8 *const gItemEffectTable[ITEMS_COUNT] =
     [ITEM_CHIPPED_POT]        = gItemEffect_EvoItem,
     [ITEM_GALARICA_CUFF]      = gItemEffect_EvoItem,
     [ITEM_GALARICA_WREATH]    = gItemEffect_EvoItem,
+    [ITEM_DRAGON_SCALE]       = gItemEffect_EvoItem,
+    [ITEM_UPGRADE]            = gItemEffect_EvoItem,
+    [ITEM_PROTECTOR]          = gItemEffect_EvoItem,
+    [ITEM_ELECTIRIZER]        = gItemEffect_EvoItem,
+    [ITEM_MAGMARIZER]         = gItemEffect_EvoItem,
+    [ITEM_DUBIOUS_DISC]       = gItemEffect_EvoItem,
+    [ITEM_REAPER_CLOTH]       = gItemEffect_EvoItem,
+    [ITEM_PRISM_SCALE]        = gItemEffect_EvoItem,
+    [ITEM_WHIPPED_DREAM]      = gItemEffect_EvoItem,
+    [ITEM_SACHET]             = gItemEffect_EvoItem,
+    [ITEM_OVAL_STONE]         = gItemEffect_EvoItem,
+    [ITEM_DEEP_SEA_SCALE]     = gItemEffect_EvoItem,
+    [ITEM_DEEP_SEA_TOOTH]     = gItemEffect_EvoItem,
+    [ITEM_METAL_COAT]         = gItemEffect_EvoItem,
+    [ITEM_KINGS_ROCK]         = gItemEffect_EvoItem,
+    [ITEM_RAZOR_CLAW]         = gItemEffect_EvoItem,
     [ITEM_AUSPICIOUS_ARMOR]   = gItemEffect_EvoItem,
     [ITEM_MALICIOUS_ARMOR]    = gItemEffect_EvoItem,
     [ITEM_SCROLL_OF_DARKNESS] = gItemEffect_EvoItem,
     [ITEM_SCROLL_OF_WATERS]   = gItemEffect_EvoItem,
+    [ITEM_BLACK_AUGURITE]     = gItemEffect_EvoItem,
+    [ITEM_LINKING_CORD]       = gItemEffect_EvoItem,
+    [ITEM_PEAT_BLOCK]         = gItemEffect_EvoItem,
 
     // Berries
     [ITEM_CHERI_BERRY]        = gItemEffect_CheriBerry,

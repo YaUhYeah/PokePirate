@@ -404,10 +404,16 @@
 #define EFFECT_HIT_SET_ENTRY_HAZARD         398
 #define EFFECT_DIRE_CLAW                    399
 #define EFFECT_BARB_BARRAGE                 400
-//Shadow Move Effects
-#define EFFECT_SHADOW_HALF                  401
-#define EFFECT_SHADOW_SKY                   402
+#define EFFECT_REVIVAL_BLESSING             401
+#define EFFECT_FROSTBITE_HIT                402
+#define EFFECT_SNOWSCAPE                    403
+#define EFFECT_TRIPLE_ARROWS                404
+#define EFFECT_INFERNAL_PARADE              405
+#define EFFECT_TAKE_HEART                   406
+#define EFFECT_AXE_KICK                     407
+#define EFFECT_SHADOW_HALF                  408
+#define EFFECT_SHADOW_SKY                   409
 
-#define NUM_BATTLE_MOVE_EFFECTS             403
+#define NUM_BATTLE_MOVE_EFFECTS             410
 
 #endif  // GUARD_CONSTANTS_BATTLE_MOVE_EFFECTS_H

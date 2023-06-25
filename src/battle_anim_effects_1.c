@@ -97,7 +97,6 @@ static void AnimSlashSlice(struct Sprite *);
 static void AnimFalseSwipeSlice(struct Sprite *);
 static void AnimFalseSwipeSlice_Step1(struct Sprite *);
 static void AnimFalseSwipeSlice_Step2(struct Sprite *);
-static void AnimFalseSwipeSlice_Step3(struct Sprite *);
 static void AnimFalseSwipePositionedSlice(struct Sprite *);
 static void AnimEndureEnergy_Step(struct Sprite *);
 static void AnimSharpenSphere(struct Sprite *);
@@ -5116,7 +5115,7 @@ static void AnimProtect(struct Sprite *sprite)
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
 
     sprite->data[0] = gBattleAnimArgs[2];
-    sprite->data[2] = (IndexOfSpritePaletteTag(ANIM_TAG_PROTECT) << 4) + 0x100;
+    sprite->data[2] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_PROTECT));
     sprite->data[7] = 16;
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]));
@@ -5914,7 +5913,7 @@ static void AnimFalseSwipeSlice_Step2(struct Sprite *sprite)
     sprite->callback = AnimFalseSwipeSlice_Step3;
 }
 
-static void AnimFalseSwipeSlice_Step3(struct Sprite *sprite)
+void AnimFalseSwipeSlice_Step3(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 1)
     {
@@ -6404,7 +6403,7 @@ void AnimTask_MusicNotesRainbowBlend(u8 taskId)
     index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[0][0]);
     if (index != 0xFF)
     {
-        index = (index << 4) + 0x100;
+        index = OBJ_PLTT_ID(index);
         for (i = 1; i < ARRAY_COUNT(gParticlesColorBlendTable[0]); i++)
             gPlttBufferFaded[index + i] = gParticlesColorBlendTable[0][i];
     }
@@ -6414,7 +6413,7 @@ void AnimTask_MusicNotesRainbowBlend(u8 taskId)
         index = AllocSpritePalette(gParticlesColorBlendTable[j][0]);
         if (index != 0xFF)
         {
-            index = (index << 4) + 0x100;
+            index = OBJ_PLTT_ID(index);
             for (i = 1; i < ARRAY_COUNT(gParticlesColorBlendTable[0]); i++)
                 gPlttBufferFaded[index + i] = gParticlesColorBlendTable[j][i];
         }
