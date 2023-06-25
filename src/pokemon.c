@@ -3502,7 +3502,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &checksum);
     EncryptBoxMon(boxMon);
     GetSpeciesName(speciesName, species);
-    //SetBoxMonData(boxMon, MON_DATA_NICKNAME, speciesName);
+    SetBoxMonData(boxMon, MON_DATA_NICKNAME, speciesName);
     SetBoxMonData(boxMon, MON_DATA_LANGUAGE, &gGameLanguage);
     SetBoxMonData(boxMon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
     SetBoxMonData(boxMon, MON_DATA_SPECIES, &species);
@@ -4743,7 +4743,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
             data[retVal++] = EXT_CTRL_CODE_ENG;
             data[retVal] = EOS;
         }
-        else if (substruct3->isShadow == TRUE)
+        else if (GetBoxMonData(boxMon, MON_DATA_IS_SHADOW, NULL)) // We don't call substruct3->isShadow directly because it's encrypted.
         {
             for (retVal = 0;
                 retVal < POKEMON_NAME_LENGTH;
@@ -5143,7 +5143,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
     case MON_DATA_NICKNAME:
     {
         s32 i;
-        if (substruct3->isShadow == TRUE)
+        if (GetBoxMonData(boxMon, MON_DATA_IS_SHADOW, NULL)) // We don't call substruct3->isShadow directly because it's encrypted.
         {
             for (i = 0; i < POKEMON_NAME_LENGTH; i++)
             boxMon->nickData.nickname[i] = gSpeciesNames[GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL)][i];

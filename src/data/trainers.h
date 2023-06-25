@@ -3838,7 +3838,7 @@ const struct Trainer gTrainers[] = {
         .items = {},
         .doubleBattle = FALSE,
         .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
-        .party = NO_ITEM_DEFAULT_MOVES_SHADOW_TEST(sParty_ShadowTest),
+        .party = EVERYTHING_CUSTOMIZED(sParty_ShadowTest),
     },
 
     [TRAINER_BILLY] =

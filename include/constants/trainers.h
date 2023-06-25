@@ -377,7 +377,6 @@
 #define F_TRAINER_PARTY_CUSTOM_MOVESET        (1 << 0)
 #define F_TRAINER_PARTY_HELD_ITEM             (1 << 1)
 #define F_TRAINER_PARTY_EVERYTHING_CUSTOMIZED (1 << 2)
-#define F_TRAINER_PARTY_SHADOW_TEST           (1 << 3)
 
 // Trainer party defines
 #define TRAINER_MON_MALE    1

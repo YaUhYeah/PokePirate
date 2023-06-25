@@ -1912,11 +1912,6 @@ static u32 GeneratePartyHash(const struct Trainer *trainer, u32 i)
         buffer = (const u8 *) &trainer->party.EverythingCustomized[i];
         n = sizeof(*trainer->party.EverythingCustomized);
     }
-    else if (trainer->partyFlags == F_TRAINER_PARTY_SHADOW_TEST)
-    {
-        buffer = (const u8 *) &trainer->party.NoItemDefaultMovesShadow[i];
-        n = sizeof(*trainer->party.NoItemDefaultMovesShadow);
-    }
     return Crc32B(buffer, n);
 }
 
@@ -2059,7 +2054,11 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                     personalityValue = (personalityValue & 0xFFFFFF00) | GeneratePersonalityForGender(MON_FEMALE, partyData[i].species);
                 if (partyData[i].nature != 0)
                     ModifyPersonalityForNature(&personalityValue, partyData[i].nature - 1);
-                if (partyData[i].isShiny)
+                if (partyData[i].isShadow)
+                {
+                    otIdType = OT_ID_PLAYER_ID;
+                }
+                else if (partyData[i].isShiny)
                 {
                     otIdType = OT_ID_PRESET;
                     fixedOtId = HIHALF(personalityValue) ^ LOHALF(personalityValue);
@@ -2096,24 +2095,18 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                     ball = partyData[i].ball;
                     SetMonData(&party[i], MON_DATA_POKEBALL, &ball);
                 }
-                if (partyData[i].nickname != NULL)
+                if (partyData[i].isShadow)
+                {
+                    bool8 shad = TRUE;
+                    SetMonData(&party[i], MON_DATA_IS_SHADOW, &shad);
+                    SetMonData(&party[i], MON_DATA_HEART_VALUE, &partyData[i].heartGauge);
+                    SetMonData(&party[i], MON_DATA_HEART_MAX, &partyData[i].heartGauge);
+                }
+                else if (partyData[i].nickname != NULL)
                 {
                     SetMonData(&party[i], MON_DATA_NICKNAME, partyData[i].nickname);
                 }
                 CalculateMonStats(&party[i]);
-            }
-            case F_TRAINER_PARTY_SHADOW_TEST:
-            {
-                const struct TrainerMonNoItemDefaultMovesShadow *partyData = trainer->party.NoItemDefaultMovesShadow;
-                fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
-                if (partyData[i].isShadow)
-                {
-                    SetMonData(&party[i], MON_DATA_IS_SHADOW, &partyData[i].isShadow);
-                    SetMonData(&party[i], MON_DATA_HEART_VALUE, &partyData[i].heartGauge);
-                    SetMonData(&party[i], MON_DATA_HEART_MAX, &partyData[i].heartGauge);
-                }
-                break;
             }
             }
 

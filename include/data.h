@@ -40,7 +40,7 @@ struct TrainerMonCustomized
     const u8 *nickname;
     const u8 *ev;
     u32 iv;
-    u16 moves[4];
+    u16 moves[MAX_MON_MOVES];
     u16 species;
     u16 heldItem;
     u16 ability;
@@ -50,6 +50,8 @@ struct TrainerMonCustomized
     u8 nature : 5;
     bool8 gender : 2;
     bool8 isShiny : 1;
+    bool8 isShadow:1;
+    u16 heartGauge;
 };
 
 struct TrainerMonNoItemDefaultMoves
@@ -57,15 +59,6 @@ struct TrainerMonNoItemDefaultMoves
     u16 iv;
     u8 lvl;
     u16 species;
-};
-
-struct TrainerMonNoItemDefaultMovesShadow
-{
-    u16 iv;
-    u8 lvl;
-    u16 species;
-    u8 isShadow;
-    u16 heartGauge;
 };
 
 struct TrainerMonItemDefaultMoves
@@ -98,7 +91,6 @@ struct TrainerMonItemCustomMoves
 #define ITEM_DEFAULT_MOVES(party) { .ItemDefaultMoves = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_HELD_ITEM
 #define ITEM_CUSTOM_MOVES(party) { .ItemCustomMoves = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM
 #define EVERYTHING_CUSTOMIZED(party) { .EverythingCustomized = party}, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_EVERYTHING_CUSTOMIZED
-#define NO_ITEM_DEFAULT_MOVES_SHADOW_TEST(party) { .NoItemDefaultMovesShadow = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_SHADOW_TEST
 
 union TrainerMonPtr
 {
@@ -107,7 +99,6 @@ union TrainerMonPtr
     const struct TrainerMonItemDefaultMoves *ItemDefaultMoves;
     const struct TrainerMonItemCustomMoves *ItemCustomMoves;
     const struct TrainerMonCustomized *EverythingCustomized;
-    const struct TrainerMonNoItemDefaultMovesShadow *NoItemDefaultMovesShadow;
 };
 
 struct Trainer

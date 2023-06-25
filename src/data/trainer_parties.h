@@ -4211,7 +4211,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Calvin1[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMovesShadow sParty_ShadowTest[] = {
+static const struct TrainerMonCustomized sParty_ShadowTest[] = {
     {
     .iv = 0,
     .lvl = 2,
