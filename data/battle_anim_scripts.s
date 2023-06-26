@@ -16756,7 +16756,7 @@ Move_SHADOW_BREAK::
 	delay 0x2
 	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 0x1
 	waitforvisualfinish
-	createvisualtask AnimTask_ShakeMon, 0x2, 0x0, 0x2, 0x0, 0x4, 0x1,
+	createvisualtask AnimTask_ShakeMon, 0x2, 0x0, 0x2, 0x0, 0x4, 0x1
 	createvisualtask AnimTask_ShakeMon, 0x2, ANIM_TARGET, 0x5, 0x0, 0x6, 0x1
 	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 0x2
 	createsprite gFlashingHitSplatSpriteTemplate, ANIM_TARGET, 3, 0x0, 0x0, 0x1, 0x1
