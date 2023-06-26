@@ -260,7 +260,7 @@ static const struct SpriteTemplate sHealthboxPlayerSpriteTemplates[2] =
     },
     {
         .tileTag = TAG_HEALTHBOX_PLAYER2_TILE,
-        .paletteTag = TAG_HEALTHBOX_PLAYER2_TILE,
+        .paletteTag = TAG_HEALTHBOX_PLAYER2_PAL,
         .oam = &sOamData_64x32,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
@@ -2590,9 +2590,6 @@ static void MoveBattleBarGraphically(u8 battlerId, u8 whichBar)
                 array[i] = 0;
         }
 
-        FreeSpritePaletteByTag(TAG_HEALTHBOX_PLAYER1_PAL);
-        ShdwLoadHealthboxPalette(0);
-
         for (i = 0; i < 8; i++)
         {
             if (i < 4)
@@ -2616,9 +2613,6 @@ static void MoveBattleBarGraphically(u8 battlerId, u8 whichBar)
             for (i = 0; i < 8; i++)
                 array[i] = 0;
         }
-
-        FreeSpritePaletteByTag(TAG_HEALTHBOX_PLAYER1_PAL);
-        ShdwLoadHealthboxPalette(0);
 
         for (i = 0; i < 8; i++)
         {
