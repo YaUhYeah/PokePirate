@@ -459,6 +459,9 @@ $(MID_SUBDIR)/mus_rg_poke_tower.s: %.s: %.mid
 $(MID_SUBDIR)/mus_rg_poke_center.s: %.s: %.mid
 	$(MID) $< $@ -E -R$(STD_REVERB) -G162 -V096
 
+$(MID_SUBDIR)/mus_murtoa_forest.s: %.s: %.mid
+	$(MID) $< $@ -E -R$(STD_REVERB) -G191 -V096
+
 $(MID_SUBDIR)/mus_rg_poke_flute.s: %.s: %.mid
 	$(MID) $< $@ -E -R$(STD_REVERB) -G165 -V048 -P5
 

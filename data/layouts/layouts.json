@@ -4106,7 +4106,7 @@
       "name": "Underwater_Route125_Layout",
       "width": 80,
       "height": 40,
-      "primary_tileset": "gTileset_General",
+      "primary_tileset": "gTileset_Haunted",
       "secondary_tileset": "gTileset_Underwater",
       "border_filepath": "data/layouts/Underwater_Route125/border.bin",
       "blockdata_filepath": "data/layouts/Underwater_Route125/map.bin"
@@ -4410,6 +4410,16 @@
       "secondary_tileset": "gTileset_MysteryEventsHouse",
       "border_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin",
       "blockdata_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin"
+    },
+    {
+      "id": "LAYOUT_WIRRA_PORT",
+      "name": "WirraPort_Layout",
+      "width": 60,
+      "height": 35,
+      "primary_tileset": "gTileset_Haunted",
+      "secondary_tileset": "gTileset_Haunted_Houses",
+      "border_filepath": "data/layouts/WirraPort/border.bin",
+      "blockdata_filepath": "data/layouts/WirraPort/map.bin"
     }
   ]
 }
