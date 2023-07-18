@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - master
-      - battle_engine
-      - pokemon_expansion
-      - item_expansion
+      - upcoming
+      - shadow
   pull_request:
 
 jobs:

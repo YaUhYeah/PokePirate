@@ -1386,7 +1386,7 @@ static void Task_GiveExpToMon(u8 taskId)
     u8 battlerId = gTasks[taskId].tExpTask_battler;
     s32 gainedExp = GetTaskExpValue(taskId);
 
-    if ((IsDoubleBattle() == TRUE || monId != gBattlerPartyIndexes[battlerId])
+    if ((WhichBattleCoords(battlerId) == 1 || monId != gBattlerPartyIndexes[battlerId])
         || (monId == gBattlerPartyIndexes[battlerId] && GetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW))) // Give exp without moving the expbar.
     {
         struct Pokemon *mon = &gPlayerParty[monId];
@@ -2478,7 +2478,7 @@ static void StartSendOutAnim(u8 battlerId, bool8 dontClearSubstituteBit)
     gSprites[gBattlerSpriteIds[battlerId]].data[2] = species;
     gSprites[gBattlerSpriteIds[battlerId]].oam.paletteNum = battlerId;
 
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerId]], gBattleMonForms[battlerId]);
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerId]], 0);
 
     gSprites[gBattlerSpriteIds[battlerId]].invisible = TRUE;
     gSprites[gBattlerSpriteIds[battlerId]].callback = SpriteCallbackDummy;
