@@ -4106,7 +4106,7 @@
       "name": "Underwater_Route125_Layout",
       "width": 80,
       "height": 40,
-      "primary_tileset": "gTileset_Haunted",
+      "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Underwater",
       "border_filepath": "data/layouts/Underwater_Route125/border.bin",
       "blockdata_filepath": "data/layouts/Underwater_Route125/map.bin"
@@ -4420,6 +4420,16 @@
       "secondary_tileset": "gTileset_Haunted_Houses",
       "border_filepath": "data/layouts/WirraPort/border.bin",
       "blockdata_filepath": "data/layouts/WirraPort/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE01",
+      "name": "Route01_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_Outdoors",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/Route01/border.bin",
+      "blockdata_filepath": "data/layouts/Route01/map.bin"
     }
   ]
 }

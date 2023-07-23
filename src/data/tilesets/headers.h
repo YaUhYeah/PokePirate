@@ -847,3 +847,14 @@ const struct Tileset gTileset_Haunted_Houses =
     .metatileAttributes = gMetatileAttributes_Haunted_Houses,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Outdoors =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Outdoors,
+    .palettes = gTilesetPalettes_Outdoors,
+    .metatiles = gMetatiles_Outdoors,
+    .metatileAttributes = gMetatileAttributes_Outdoors,
+    .callback = NULL,
+};

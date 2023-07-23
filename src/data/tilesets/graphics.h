@@ -1672,3 +1672,22 @@ const u16 gTilesetPalettes_Haunted_Houses[][16] =
 };
 
 const u32 gTilesetTiles_Haunted_Houses[] = INCBIN_U32("data/tilesets/secondary/haunted_houses/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Outdoors[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/outdoors/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Outdoors[] = INCBIN_U32("data/tilesets/primary/outdoors/tiles.4bpp.lz");

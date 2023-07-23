@@ -450,6 +450,9 @@ $(MID_SUBDIR)/mus_rg_route24.s: %.s: %.mid
 $(MID_SUBDIR)/mus_rg_teachy_tv_show.s: %.s: %.mid
 	$(MID) $< $@ -E -R$(STD_REVERB) -G131 -V068
 
+$(MID_SUBDIR)/mus_sky_tower.s: %.s: %.mid
+	$(MID) $< $@ -E -R$(STD_REVERB) -G192 -V090
+
 $(MID_SUBDIR)/mus_rg_mt_moon.s: %.s: %.mid
 	$(MID) $< $@ -E -R$(STD_REVERB) -G147 -V090
 
