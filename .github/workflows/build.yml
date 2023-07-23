@@ -40,7 +40,7 @@ jobs:
           ./install.sh ../
         working-directory: agbcc
 
-      - name: Agbcc
+      - name: agbcc
         run: make -j${nproc} -O all
 
       - name: Modern
