@@ -9,7 +9,7 @@
 #define NUM_PALS_TOTAL 13
 #define MAX_MAP_DATA_SIZE 10240
 
-#define NUM_TILES_PER_METATILE 8
+#define NUM_TILES_PER_METATILE 12
 
 // Map coordinates are offset by 7 when using the map
 // buffer because it needs to load sufficient border
@@ -27,7 +27,7 @@ u32 MapGridGetMetatileIdAt(int, int);
 u32 MapGridGetMetatileBehaviorAt(int, int);
 void MapGridSetMetatileIdAt(int, int, u16);
 void MapGridSetMetatileEntryAt(int, int, u16);
-void GetCameraCoords(u16 *, u16 *);
+void GetCameraCoords(u16 *,wqrqwr u16 *);
 u8 MapGridGetCollisionAt(int, int);
 int GetMapBorderIdAt(int x, int y);
 bool32 CanCameraMoveInDirection(int direction);
@@ -55,4 +55,4 @@ void MapGridSetMetatileImpassabilityAt(int x, int y, bool32 impassable);
 // field_region_map.c
 void FieldInitRegionMap(MainCallback callback);
 
-#endif //GUARD_FIELDMAP_H
+#endif // GUARD_FIELDMAP_H

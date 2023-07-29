@@ -1691,3 +1691,22 @@ const u16 gTilesetPalettes_Outdoors[][16] =
 };
 
 const u32 gTilesetTiles_Outdoors[] = INCBIN_U32("data/tilesets/primary/outdoors/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Terrain[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/terrain/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Terrain[] = INCBIN_U32("data/tilesets/primary/terrain/tiles.4bpp.lz");

@@ -216,3 +216,6 @@ const u16 gMetatileAttributes_Haunted_Houses[] = INCBIN_U16("data/tilesets/secon
 
 const u16 gMetatiles_Outdoors[] = INCBIN_U16("data/tilesets/primary/outdoors/metatiles.bin");
 const u16 gMetatileAttributes_Outdoors[] = INCBIN_U16("data/tilesets/primary/outdoors/metatile_attributes.bin");
+
+const u16 gMetatiles_Terrain[] = INCBIN_U16("data/tilesets/primary/terrain/metatiles.bin");
+const u16 gMetatileAttributes_Terrain[] = INCBIN_U16("data/tilesets/primary/terrain/metatile_attributes.bin");

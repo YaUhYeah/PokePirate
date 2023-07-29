@@ -4430,6 +4430,16 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/Route01/border.bin",
       "blockdata_filepath": "data/layouts/Route01/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE02",
+      "name": "Route02_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Terrain",
+      "secondary_tileset": "gTileset_Haunted_Houses",
+      "border_filepath": "data/layouts/Route02/border.bin",
+      "blockdata_filepath": "data/layouts/Route02/map.bin"
     }
   ]
 }

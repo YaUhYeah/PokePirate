@@ -1063,3 +1063,5 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/maps/WirraPort/scripts.inc"
 
 	.include "data/maps/Route01/scripts.inc"
+
+	.include "data/maps/Route02/scripts.inc"
