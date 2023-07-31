@@ -373,6 +373,9 @@
 #define METATILE_Mossdeep_Door              0x2A1
 #define METATILE_Mossdeep_Door_SpaceCenter  0x2ED
 
+// gTileset_Outdoors
+#define METATILE_Outdoors_Door  0x0B4
+
 // gTileset_Pacifidlog
 #define METATILE_Pacifidlog_Door                               0x21A
 #define METATILE_Pacifidlog_FloatingLogs_HorizontalLeft        0x250

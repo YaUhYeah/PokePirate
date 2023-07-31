@@ -4,9 +4,7 @@ on:
   push:
     branches:
       - master
-      - battle_engine
-      - pokemon_expansion
-      - item_expansion
+      - upcoming
   pull_request:
 
 jobs:
@@ -40,7 +38,7 @@ jobs:
           ./install.sh ../
         working-directory: agbcc
 
-      - name: agbcc
+      - name: Agbcc
         run: make -j${nproc} -O all
 
       - name: Modern
