@@ -3260,6 +3260,80 @@ static const u8 sHydroSteamDescription[] = _(
     "This move's power increases\n"
     "under harsh sunlight.");
 
+// Shadow Moves
+static const u8 sShadowBlitzDescription[] = _(
+    "Tackles the opponent while\n"
+    "casting a shadowy aura.");
+
+static const u8 sShadowWaveDescription[] = _(
+    "Shadowy aura waves are\n"
+    "loosed to inflict damage.");
+
+static const u8 sShadowRushDescription[] = _(
+    "Executes a tackle while\n"
+    "exuding a shadowy aura.");
+
+static const u8 sShadowRaveDescription[] = _(
+    "A shadowy aura in the ground\n"
+    "is used to launch spikes.");
+
+static const u8 sShadowFireDescription[] = _(
+    "A shadowy fireball attack\n"
+    "that may inflict a burn.");
+
+static const u8 sShadowChillDescription[] = _(
+    "A shadowy ice attack that\n"
+    "may freeze.");
+
+static const u8 sShadowBoltDescription[] = _(
+    "A shadowy thunder attack\n"
+    "that may paralyze.");
+
+static const u8 sShadowStormDescription[] = _(
+    "A shadowy aura is used to\n"
+    "whip up a vicious tornado.");
+
+static const u8 sShadowBlastDescription[] = _(
+    "A wicked blade of air is\n"
+    "formed using a shadowy aura.");
+
+static const u8 sShadowBreakDescription[] = _(
+    "A shattering ram attack with\n"
+    "a shadowy aura.");
+
+static const u8 sShadowEndDescription[] = _(
+    "A shadowy aura ram attack that\n"
+    "also rebounds on the user.");
+
+static const u8 sShadowDownDescription[] = _(
+    "A shadowy aura that sharply\n"
+    "cuts both foe's Defense.");
+
+static const u8 sShadowHalfDescription[] = _(
+    "A shadowy aura's energy cuts\n"
+    "everyone's HP by half.");
+
+static const u8 sShadowMistDescription[] = _(
+    "A shadowy aura sharply cuts\n"
+    "the foe's evasiveness.");
+
+static const u8 sShadowShedDescription[] = _(
+    "A shadowy aura eliminates\n"
+    "Reflect and similar moves.");
+
+static const u8 sShadowHoldDescription[] = _(
+    "Shadowy chains prevent all\n"
+    "opponents from escaping.");
+
+static const u8 sShadowPanicDescription[] = _(
+    "A shadowy aura emanates to\n"
+    "cause a confuse condition.");
+
+static const u8 sShadowSkyDescription[] = _(
+    "Darkness hurts all but Shadow\n"
+    "Pokémon for 5 turns.");
+
+// End
 const u8 gNotDoneYetDescription[] = _(
     "This move can't be used. Its\n"
     "effect is in development.");
@@ -4099,4 +4173,22 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_MAGICAL_TORQUE - 1] = sMagicalTorqueDescription,
     [MOVE_PSYBLADE - 1] = sPsybladeDescription,
     [MOVE_HYDRO_STEAM - 1] = sHydroSteamDescription,
+    [MOVE_SHADOW_BLITZ - 1] = sShadowBlitzDescription,
+    [MOVE_SHADOW_WAVE - 1] = sShadowWaveDescription,
+    [MOVE_SHADOW_RUSH - 1] = sShadowRushDescription,
+    [MOVE_SHADOW_RAVE - 1] = sShadowRaveDescription,
+    [MOVE_SHADOW_FIRE - 1] = sShadowFireDescription,
+    [MOVE_SHADOW_CHILL - 1] = sShadowChillDescription,
+    [MOVE_SHADOW_BOLT - 1] = sShadowBoltDescription,
+    [MOVE_SHADOW_STORM - 1] = sShadowStormDescription,
+    [MOVE_SHADOW_BLAST - 1] = sShadowBlastDescription,
+    [MOVE_SHADOW_BREAK - 1] = sShadowBreakDescription,
+    [MOVE_SHADOW_END - 1] = sShadowEndDescription,
+    [MOVE_SHADOW_DOWN - 1] = sShadowDownDescription,
+    [MOVE_SHADOW_HALF - 1] = sShadowHalfDescription,
+    [MOVE_SHADOW_MIST - 1] = sShadowMistDescription,
+    [MOVE_SHADOW_SHED - 1] = sShadowShedDescription,
+    [MOVE_SHADOW_HOLD - 1] = sShadowHoldDescription,
+    [MOVE_SHADOW_PANIC - 1] = sShadowPanicDescription,
+    [MOVE_SHADOW_SKY - 1] = sShadowSkyDescription,
 };

@@ -1186,11 +1186,11 @@
 	.byte 0xe5
 	.endm
 
-	.macro doweatherformchangeanimation
+	.macro unused3
 	.byte 0xe6
 	.endm
 
-	.macro tryweatherformdatachange
+	.macro unused4
 	.byte 0xe7
 	.endm
 
@@ -2103,6 +2103,11 @@
 	various \battler, VARIOUS_TRY_TRAINER_SLIDE_MSG_MEGA_EVOLUTION
 	.endm
 
+	.macro modifyheartvalue battler:req amount:req
+	various \battler, VARIOUS_MODIFY_HEART_VALUE
+	.4byte \amount
+	.endm
+
 @ helpful macros
 	.macro setstatchanger stat:req, stages:req, down:req
 	setbyte sSTATCHANGER, \stat | \stages << 3 | \down << 7
@@ -2304,4 +2309,9 @@
 	.macro tryrevivalblessing, jumpInstr:req
 	various 0, VARIOUS_TRY_REVIVAL_BLESSING
 	.4byte \jumpInstr
+	.endm
+
+	.macro setshadowsky ptr:req
+	various BS_ATTACKER, VARIOUS_SET_SHADOW_SKY
+	.4byte \ptr
 	.endm

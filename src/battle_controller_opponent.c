@@ -96,6 +96,7 @@ static void OpponentHandleLinkStandbyMsg(void);
 static void OpponentHandleResetActionMoveSelection(void);
 static void OpponentHandleEndLinkBattle(void);
 static void OpponentHandleDebugMenu(void);
+static void OpponentHandleHeartValueUpdate(void);
 static void OpponentCmdEnd(void);
 static u8 CountAIAliveNonEggMonsExcept(u8 slotToIgnore);
 
@@ -170,6 +171,7 @@ static void (*const sOpponentBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
     [CONTROLLER_RESETACTIONMOVESELECTION] = OpponentHandleResetActionMoveSelection,
     [CONTROLLER_ENDLINKBATTLE]            = OpponentHandleEndLinkBattle,
     [CONTROLLER_DEBUGMENU]                = OpponentHandleDebugMenu,
+    [CONTROLLER_HEARTVALUEUPDATE]         = OpponentHandleHeartValueUpdate,
     [CONTROLLER_TERMINATOR_NOP]           = OpponentCmdEnd
 };
 
@@ -617,6 +619,9 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
         battleMon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
         battleMon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
         battleMon.metLevel = GetMonData(&gEnemyParty[monId], MON_DATA_MET_LEVEL);
+        battleMon.isShadow = GetMonData(&gEnemyParty[monId], MON_DATA_IS_SHADOW);
+        battleMon.heartVal = GetMonData(&gEnemyParty[monId], MON_DATA_HEART_VALUE);
+        battleMon.heartMax = GetMonData(&gEnemyParty[monId], MON_DATA_HEART_MAX);
         GetMonData(&gEnemyParty[monId], MON_DATA_NICKNAME, nickname);
         StringCopy_Nickname(battleMon.nickname, nickname);
         GetMonData(&gEnemyParty[monId], MON_DATA_OT_NAME, battleMon.otName);
@@ -876,6 +881,22 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
         dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_TOUGH_RIBBON);
         size = 1;
         break;
+     case REQUEST_IS_SHADOW_BATTLE:
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_IS_SHADOW);
+        size = 1;
+        break;
+    case REQUEST_REVERSE_MODE_BATTLE:
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_REVERSE_MODE);
+        size = 1;
+        break;
+    case REQUEST_HEART_VALUE_BATTLE:
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_HEART_VALUE);
+        size = 1;
+        break;
+    case REQUEST_HEART_MAX_BATTLE:
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_HEART_MAX);
+        size = 1;
+        break;
     }
 
     return size;
@@ -961,6 +982,7 @@ static void SetOpponentMonData(u8 monId)
             SetMonData(&gEnemyParty[monId], MON_DATA_SPEED, &battlePokemon->speed);
             SetMonData(&gEnemyParty[monId], MON_DATA_SPATK, &battlePokemon->spAttack);
             SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF, &battlePokemon->spDefense);
+            SetMonData(&gEnemyParty[monId], MON_DATA_IS_SHADOW, &battlePokemon->isShadow);
         }
         break;
     case REQUEST_SPECIES_BATTLE:
@@ -1130,6 +1152,18 @@ static void SetOpponentMonData(u8 monId)
     case REQUEST_TOUGH_RIBBON_BATTLE:
         SetMonData(&gEnemyParty[monId], MON_DATA_TOUGH_RIBBON, &gBattleResources->bufferA[gActiveBattler][3]);
         break;
+    case REQUEST_IS_SHADOW_BATTLE:
+        SetMonData(&gEnemyParty[monId], MON_DATA_IS_SHADOW, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_REVERSE_MODE_BATTLE:
+        SetMonData(&gEnemyParty[monId], MON_DATA_REVERSE_MODE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HEART_VALUE_BATTLE:
+        SetMonData(&gEnemyParty[monId], MON_DATA_HEART_VALUE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HEART_MAX_BATTLE:
+        SetMonData(&gEnemyParty[monId], MON_DATA_HEART_MAX, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
     }
 }
 
@@ -1160,7 +1194,7 @@ static void OpponentHandleLoadMonSprite(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = species;
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], gBattleMonForms[gActiveBattler]);
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], 0);
 
     SetBattlerShadowSpriteCallback(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
 
@@ -1201,7 +1235,7 @@ static void StartSendOutAnim(u8 battlerId, bool8 dontClearSubstituteBit)
 
     gSprites[gBattlerSpriteIds[battlerId]].oam.paletteNum = battlerId;
 
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerId]], gBattleMonForms[battlerId]);
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerId]], 0);
 
     gSprites[gBattlerSpriteIds[battlerId]].invisible = TRUE;
     gSprites[gBattlerSpriteIds[battlerId]].callback = SpriteCallbackDummy;
@@ -2099,6 +2133,11 @@ static void OpponentHandleEndLinkBattle(void)
 }
 
 static void OpponentHandleDebugMenu(void)
+{
+    OpponentBufferExecCompleted();
+}
+
+static void OpponentHandleHeartValueUpdate(void)
 {
     OpponentBufferExecCompleted();
 }

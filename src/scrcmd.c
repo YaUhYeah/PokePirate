@@ -1552,7 +1552,7 @@ bool8 ScrCmd_bufferspeciesname(struct ScriptContext *ctx)
     u8 stringVarIndex = ScriptReadByte(ctx);
     u16 species = VarGet(ScriptReadHalfword(ctx));
 
-    StringCopy(sScriptStringVars[stringVarIndex], gSpeciesNames[species]);
+    StringCopy(sScriptStringVars[stringVarIndex], GetSpeciesName(species));
     return FALSE;
 }
 
@@ -1563,7 +1563,7 @@ bool8 ScrCmd_bufferleadmonspeciesname(struct ScriptContext *ctx)
     u8 *dest = sScriptStringVars[stringVarIndex];
     u8 partyIndex = GetLeadMonIndex();
     u32 species = GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES, NULL);
-    StringCopy(dest, gSpeciesNames[species]);
+    StringCopy(dest, GetSpeciesName(species));
     return FALSE;
 }
 
@@ -2228,18 +2228,11 @@ bool8 ScrCmd_lockfortrainer(struct ScriptContext *ctx)
 // This command will set a Pokémon's modernFatefulEncounter bit; there is no similar command to clear it.
 bool8 ScrCmd_setmonmodernfatefulencounter(struct ScriptContext *ctx)
 {
-    bool8 isModernFatefulEncounter = TRUE;
-    u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
-
-    SetMonData(&gPlayerParty[partyIndex], MON_DATA_MODERN_FATEFUL_ENCOUNTER, &isModernFatefulEncounter);
     return FALSE;
 }
 
 bool8 ScrCmd_checkmonmodernfatefulencounter(struct ScriptContext *ctx)
 {
-    u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
-
-    gSpecialVar_Result = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MODERN_FATEFUL_ENCOUNTER, NULL);
     return FALSE;
 }
 
@@ -2323,4 +2316,29 @@ bool8 ScrCmd_warpwhitefade(struct ScriptContext *ctx)
     DoWhiteFadeWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
+}
+
+bool8 ScrCmd_setwildshadowbattle(struct ScriptContext *ctx)
+{
+    u16 species = ScriptReadHalfword(ctx);
+    u8 level = ScriptReadByte(ctx);
+    u16 item = ScriptReadHalfword(ctx);
+    u16 heartValue = ScriptReadHalfword(ctx);
+    u16 species2 = ScriptReadHalfword(ctx);
+    u8 level2 = ScriptReadByte(ctx);
+    u16 item2 = ScriptReadHalfword(ctx);
+    u16 heartValue2 = ScriptReadHalfword(ctx);
+
+    if(species2 == SPECIES_NONE)
+    {
+        CreateScriptedWildShadowMon(species, level, item, heartValue);
+        gIsScriptedWildDouble = FALSE;
+    }
+    else
+    {
+        CreateScriptedDoubleWildShadowMon(species, level, item, heartValue, species2, level2, item2, heartValue2);
+        gIsScriptedWildDouble = TRUE;
+    }
+
+    return FALSE;
 }

@@ -40,6 +40,7 @@
 #define sSWITCH_CASE                 (gBattleScripting + 0x36) // switchCase
 #define sBERRY_OVERRIDE              (gBattleScripting + 0x37) // overrideBerryRequirements
 #define sSTICKY_WEB_STAT_DROP        (gBattleScripting + 0x38) // stickyWebStatDrop
+#define sHEARTVALUE_STATE            (gBattleScripting + 0x39) // heartValueState
 
 // Array entries for battle communication
 #define MULTIUSE_STATE          0
@@ -257,6 +258,8 @@
 #define VARIOUS_TRY_REVIVAL_BLESSING                 165
 #define VARIOUS_TRY_TRAINER_SLIDE_MSG_Z_MOVE         166
 #define VARIOUS_TRY_TRAINER_SLIDE_MSG_MEGA_EVOLUTION 167
+#define VARIOUS_MODIFY_HEART_VALUE                   168
+#define VARIOUS_SET_SHADOW_SKY                       169
 
 // Cmd_manipulatedamage
 #define DMG_CHANGE_SIGN            0

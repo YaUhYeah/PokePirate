@@ -40,7 +40,7 @@ struct TrainerMonCustomized
     const u8 *nickname;
     const u8 *ev;
     u32 iv;
-    u16 moves[4];
+    u16 moves[MAX_MON_MOVES];
     u16 species;
     u16 heldItem;
     u16 ability;
@@ -50,6 +50,8 @@ struct TrainerMonCustomized
     u8 nature : 5;
     bool8 gender : 2;
     bool8 isShiny : 1;
+    bool8 isShadow:1;
+    u16 heartGauge;
 };
 
 struct TrainerMonNoItemDefaultMoves
@@ -153,7 +155,7 @@ extern const struct MonCoords gTrainerBackPicCoords[];
 extern const struct CompressedSpriteSheet gTrainerBackPicTable[]; // functionally unused
 extern const struct CompressedSpritePalette gTrainerBackPicPaletteTable[];
 
-extern const u8 gEnemyMonElevation[NUM_SPECIES];
+extern const u8 gEnemyMonElevation[NUM_SPECIES + 1];
 
 extern const union AnimCmd *const *const gMonFrontAnimsPtrTable[];
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
@@ -161,7 +163,7 @@ extern const struct CompressedSpriteSheet gMonFrontPicTableFemale[];
 
 extern const struct Trainer gTrainers[];
 extern const u8 gTrainerClassNames[][13];
-extern const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1];
+extern const u8 gSpeciesNames[NUM_SPECIES][POKEMON_NAME_LENGTH + 1];
 extern const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1];
 extern const u8 *const gZMoveNames[];
 

@@ -91,7 +91,10 @@ enum {
     MON_DATA_EARTH_RIBBON,
     MON_DATA_WORLD_RIBBON,
     MON_DATA_UNUSED_RIBBONS,
-    MON_DATA_MODERN_FATEFUL_ENCOUNTER,
+    MON_DATA_IS_SHADOW,
+    MON_DATA_REVERSE_MODE,
+    MON_DATA_HEART_VALUE,
+    MON_DATA_HEART_MAX,
     MON_DATA_KNOWN_MOVES,
     MON_DATA_RIBBON_COUNT,
     MON_DATA_RIBBONS,
@@ -173,6 +176,7 @@ struct PokemonSubstruct3
  /* 0x0B */ u32 worldRibbon:1;              // Distributed during Pokémon Festa '04 and '05 to tournament winners.
  /* 0x0B */ u32 unusedRibbons:2;            // Discarded in Gen 4.
  /* 0x0B */ u32 abilityNum:2;
+ /* 0x0B */ u32 isShadow:1; // was previously modernFatefulEncounter, is now used for checking if it's a shadow pokemon
 
  // The functionality of this bit changed in FRLG:
  // In RS, this bit does nothing, is never set, & is accidentally unset when hatching Eggs.
@@ -180,8 +184,8 @@ struct PokemonSubstruct3
  // If set, a Pokémon is a fateful encounter in FRLG's summary screen if hatched & for all Pokémon in Gen 4+ summary screens.
  // Set for in-game event island legendaries, events distributed after a certain date, & Pokémon from XD: Gale of Darkness.
  // Not to be confused with METLOC_FATEFUL_ENCOUNTER.
- /* 0x0B */ u32 modernFatefulEncounter:1;
-};
+ /* 0x0B */ //u32 modernFatefulEncounter:1;
+}; /* size = 12 */
 
 // Number of bytes in the largest Pokémon substruct.
 // They are assumed to be the same size, and will be padded to
@@ -201,11 +205,22 @@ union PokemonSubstruct
     u16 raw[NUM_SUBSTRUCT_BYTES / 2]; // /2 because it's u16, not u8
 };
 
+union __attribute__((packed, aligned(2))) NicknameShadowdata
+{
+    u8 nickname[POKEMON_NAME_LENGTH];
+    struct Shadowdata
+    {
+        u8 isReverse;
+        u16 heartValue;
+        u16 heartMax;
+    } shadowData;
+};
+
 struct BoxPokemon
 {
     u32 personality;
     u32 otId;
-    u8 nickname[POKEMON_NAME_LENGTH];
+    union NicknameShadowdata nickData;
     u8 language;
     u8 isBadEgg:1;
     u8 hasSpecies:1;
@@ -300,6 +315,10 @@ struct BattlePokemon
     /*0x51*/ u32 status2;
     /*0x55*/ u32 otId;
     /*0x59*/ u8 metLevel;
+    /*0x5A*/ u8 isShadow;
+    /*0x5B*/ u8 isReverse;
+    /*0x5C*/ u16 heartVal;
+    /*0x5E*/ u16 heartMax;
 };
 
 struct SpeciesInfo /*0x24*/
@@ -344,10 +363,46 @@ struct BattleMove
     u8 secondaryEffectChance;
     u16 target;
     s8 priority;
-    u32 flags;
     u8 split;
     u16 argument;
     u8 zMoveEffect;
+    // Flags
+    u32 makesContact:1;
+    u32 ignoresProtect:1;
+    u32 magicCoatAffected:1;
+    u32 snatchAffected:1;
+    u32 mirrorMoveBanned:1;
+    u32 ignoresKingsRock:1;
+    u32 highCritRatio:1;
+    u32 punchingMove:1;
+    u32 sheerForceBoost:1;
+    u32 bitingMove:1;
+    u32 pulseMove:1;
+    u32 soundMove:1;
+    u32 ballisticMove:1;
+    u32 protectionMove:1;
+    u32 powderMove:1;
+    u32 danceMove:1;
+    u32 windMove:1;
+    u32 slicingMove:1;
+    u32 minimizeDoubleDamage:1;
+    u32 ignoresTargetAbility:1;
+    u32 ignoresTargetDefenseEvasionStages:1;
+    u32 damagesUnderground:1;
+    u32 damagesUnderwater:1;
+    u32 damagesAirborne:1;
+    u32 damagesAirborneDoubleDamage:1;
+    u32 ignoreTypeIfFlyingAndUngrounded:1;
+    u32 thawsUser:1;
+    u32 ignoresSubstitute:1;
+    u32 strikeCount:4;  // Max 15 hits. Defaults to 1 if not set. May apply its effect on each hit.
+    u32 meFirstBanned:1;
+    u32 gravityBanned:1;
+    u32 mimicBanned:1;
+    u32 metronomeBanned:1;
+    u32 copycatBanned:1;
+    u32 sleepTalkBanned:1;
+    u32 instructBanned:1;
 };
 
 #define SPINDA_SPOT_WIDTH 16
@@ -449,6 +504,8 @@ void SetMonMoveSlot(struct Pokemon *mon, u16 move, u8 slot);
 void SetBattleMonMoveSlot(struct BattlePokemon *mon, u16 move, u8 slot);
 void GiveMonInitialMoveset(struct Pokemon *mon);
 void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon);
+void GiveMonInitialMoveset_Fast(struct Pokemon *mon);
+void GiveBoxMonInitialMoveset_Fast(struct BoxPokemon *boxMon);
 u16 MonTryLearningNewMove(struct Pokemon *mon, bool8 firstMove);
 void DeleteFirstMoveAndGiveMoveToMon(struct Pokemon *mon, u16 move);
 void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
@@ -457,6 +514,7 @@ u8 GetDefaultMoveTarget(u8 battlerId);
 u8 GetMonGender(struct Pokemon *mon);
 u8 GetBoxMonGender(struct BoxPokemon *boxMon);
 u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality);
+bool32 IsPersonalityFemale(u16 species, u32 personality);
 u32 GetUnownSpeciesId(u32 personality);
 void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u8 battlerPosition);
 void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerSpriteId, u8 battlerPosition);
@@ -485,7 +543,7 @@ u8 GetSecretBaseTrainerPicIndex(void);
 u8 GetSecretBaseTrainerClass(void);
 bool8 IsPlayerPartyAndPokemonStorageFull(void);
 bool8 IsPokemonStorageFull(void);
-void GetSpeciesName(u8 *name, u16 species);
+const u8 *GetSpeciesName(u16 species);
 u8 CalculatePPWithBonus(u16 move, u8 ppBonuses, u8 moveIndex);
 void RemoveMonPPBonus(struct Pokemon *mon, u8 moveIndex);
 void RemoveBattleMonPPBonus(struct BattlePokemon *mon, u8 moveIndex);
@@ -505,7 +563,7 @@ u16 NationalToHoennOrder(u16 nationalNum);
 u16 SpeciesToNationalPokedexNum(u16 species);
 u16 SpeciesToHoennPokedexNum(u16 species);
 u16 HoennToNationalOrder(u16 hoennNum);
-void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, bool8 isFrontPic);
+void DrawSpindaSpots(u32 personality, u8 *dest, bool32 isSecondFrame);
 void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies);
 u8 GetPlayerFlankId(void);
 u16 GetLinkTrainerFlankId(u8 id);
@@ -527,7 +585,6 @@ u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves);
 u8 GetNumberOfRelearnableMoves(struct Pokemon *mon);
 u16 SpeciesToPokedexNum(u16 species);
 bool32 IsSpeciesInHoennDex(u16 species);
-void ClearBattleMonForms(void);
 u16 GetBattleBGM(void);
 void PlayBattleBGM(void);
 void PlayMapChosenOrBattleBGM(u16 songId);
@@ -570,10 +627,16 @@ u16 GetFormChangeTargetSpecies(struct Pokemon *mon, u16 method, u32 arg);
 u16 GetFormChangeTargetSpeciesBoxMon(struct BoxPokemon *boxMon, u16 method, u32 arg);
 bool32 DoesSpeciesHaveFormChangeMethod(u16 species, u16 method);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
-bool32 ShouldShowFemaleDifferences(u16 species, u32 personality);
+bool32 SpeciesHasGenderDifferences(u16 species);
 bool32 TryFormChange(u32 monId, u32 side, u16 method);
 void TryToSetBattleFormChangeMoves(struct Pokemon *mon, u16 method);
 u32 GetMonFriendshipScore(struct Pokemon *pokemon);
 void UpdateMonPersonality(struct BoxPokemon *boxMon, u32 personality);
+u8 CalculatePartyCount(struct Pokemon *party);
+u16 SanitizeSpeciesId(u16 species);
+bool32 IsSpeciesEnabled(u16 species);
+u8 GetHeartGaugeSection(u16 heartVal, u16 heartMax);
+u8 ShdwCanMonGainEXP(struct Pokemon *mon);
+u8 CheckPartyShadow(struct Pokemon *party, u8 selection);
 
 #endif // GUARD_POKEMON_H

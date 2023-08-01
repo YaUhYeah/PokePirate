@@ -1583,17 +1583,17 @@
 	.endm
 
 	@ Sets the modernFatefulEncounter bit for the Pokemon in the specified slot of the player's party.
-	.macro setmodernfatefulencounter slot:req
-	.byte 0xcd
-	.2byte \slot
-	.endm
+	@.macro setmodernfatefulencounter slot:req
+	@.byte 0xcd
+	@.2byte \slot
+	@.endm
 
 	@ Checks if the modernFatefulEncounter bit is set for the Pokemon in the specified slot of the player's party. If it isn't set,
 	@ VAR_RESULT is TRUE. If the bit is set (or if the specified slot is empty or invalid), VAR_RESULT is FALSE.
-	.macro checkmodernfatefulencounter slot:req
-	.byte 0xce
-	.2byte \slot
-	.endm
+	@.macro checkmodernfatefulencounter slot:req
+	@.byte 0xce
+	@.2byte \slot
+	@.endm
 
 	@ Jumps to the ram script saved from a Wonder Card. If there is no valid saved Wonder Card or if the
 	@ ram script is invalid then this does nothing.
@@ -2017,4 +2017,17 @@
 	setvar VAR_0x8001, \canStopEvo
 	setvar VAR_0x8002, \tryMultiple
 	special TrySpecialOverworldEvo
+	.endm
+
+	@ As setwildbattle, but with one extra arg for each species to determine shadow mon values.
+	.macro setwildshadowbattle species:req, level:req, item=ITEM_NONE, heartValue:req, species2=SPECIES_NONE, level2=0, item2=ITEM_NONE, heartValue2=0
+	.byte 0xe3
+	.2byte \species
+	.byte \level
+	.2byte \item
+	.2byte \heartValue
+	.2byte \species2
+	.byte \level2
+	.2byte \item2
+	.2byte \heartValue2
 	.endm

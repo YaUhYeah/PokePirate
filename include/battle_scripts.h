@@ -236,6 +236,7 @@ extern const u8 BattleScript_BallThrow[];
 extern const u8 BattleScript_BallThrowByWally[];
 extern const u8 BattleScript_SafariBallThrow[];
 extern const u8 BattleScript_SuccessBallThrow[];
+extern const u8 BattleScript_SuccessBallThrowShadow[];
 extern const u8 BattleScript_WallyBallThrow[];
 extern const u8 BattleScript_ShakeBallThrow[];
 extern const u8 BattleScript_TrainerBallBlock[];
@@ -471,6 +472,11 @@ extern const u8 BattleScript_StealthRockActivates[];
 extern const u8 BattleScript_SpikesActivates[];
 extern const u8 BattleScript_BerserkGeneRet[];
 extern const u8 BattleScript_TargetFormChangeWithStringNoPopup[];
+extern const u8 BattleScript_DefDown[];
+extern const u8 BattleScript_TrainerCallToMon[];
+extern const u8 BattleScript_TrainerCallToMonShadow[];
+extern const u8 BattleScript_ShadowSkyContinues[];
+extern const u8 BattleScript_ShadowSkyEnd[];
 
 // zmoves
 extern const u8 BattleScript_ZMoveActivateDamaging[];

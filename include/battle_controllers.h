@@ -15,7 +15,6 @@ enum {
     REQUEST_PPMOVE2_BATTLE,
     REQUEST_PPMOVE3_BATTLE,
     REQUEST_PPMOVE4_BATTLE,
-    REQUEST_UNUSED_13_BATTLE,
     REQUEST_UNUSED_14_BATTLE,
     REQUEST_UNUSED_15_BATTLE,
     REQUEST_UNUSED_16_BATTLE,
@@ -62,6 +61,10 @@ enum {
     REQUEST_CUTE_RIBBON_BATTLE,
     REQUEST_SMART_RIBBON_BATTLE,
     REQUEST_TOUGH_RIBBON_BATTLE,
+    REQUEST_IS_SHADOW_BATTLE,
+    REQUEST_REVERSE_MODE_BATTLE,
+    REQUEST_HEART_VALUE_BATTLE,
+    REQUEST_HEART_MAX_BATTLE,
 };
 
 // Special arguments for Battle Controller functions.
@@ -191,6 +194,7 @@ enum
     CONTROLLER_RESETACTIONMOVESELECTION,
     CONTROLLER_ENDLINKBATTLE,
     CONTROLLER_DEBUGMENU,
+    CONTROLLER_HEARTVALUEUPDATE,
     /*new controllers should go here*/
     CONTROLLER_TERMINATOR_NOP,
     CONTROLLER_CMDS_COUNT
@@ -250,6 +254,7 @@ void BtlController_EmitLinkStandbyMsg(u8 bufferId, u8 mode, bool32 record);
 void BtlController_EmitResetActionMoveSelection(u8 bufferId, u8 caseId);
 void BtlController_EmitEndLinkBattle(u8 bufferId, u8 battleOutcome);
 void BtlController_EmitDebugMenu(u8 bufferId);
+void BtlController_EmitHeartValueUpdate(u8 bufferId, u8 partyId, s32 amount);
 
 // player controller
 void SetControllerToPlayer(void);

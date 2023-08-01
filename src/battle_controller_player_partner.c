@@ -88,6 +88,7 @@ static void PlayerPartnerHandleLinkStandbyMsg(void);
 static void PlayerPartnerHandleResetActionMoveSelection(void);
 static void PlayerPartnerHandleEndLinkBattle(void);
 static void PlayerPartnerHandleBattleDebug(void);
+static void PlayerPartnerHandleHeartValueUpdate(void);
 static void PlayerPartnerCmdEnd(void);
 
 static void PlayerPartnerBufferRunCommand(void);
@@ -105,6 +106,13 @@ static void DoSwitchOutAnimation(void);
 static void PlayerPartnerDoMoveAnimation(void);
 static void Task_StartSendOutAnim(u8 taskId);
 static void EndDrawPartyStatusSummary(void);
+
+// Shadow Pokemon
+static s32 GetTaskHeartValue(u8 taskId);
+static void Task_LowerHeartValue(u8 taskId);
+static void Task_PrepareToLowerHeartValWithBar(u8 taskId);
+static void Task_LowerHeartValWithBar(u8 taskId);
+static void Task_LaunchSectionUnlockAnim(u8 taskId);
 
 static void (*const sPlayerPartnerBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
 {
@@ -165,6 +173,7 @@ static void (*const sPlayerPartnerBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
     [CONTROLLER_RESETACTIONMOVESELECTION] = PlayerPartnerHandleResetActionMoveSelection,
     [CONTROLLER_ENDLINKBATTLE]            = PlayerPartnerHandleEndLinkBattle,
     [CONTROLLER_DEBUGMENU]                = PlayerPartnerHandleBattleDebug,
+    [CONTROLLER_HEARTVALUEUPDATE]         = PlayerPartnerHandleHeartValueUpdate,
     [CONTROLLER_TERMINATOR_NOP]           = PlayerPartnerCmdEnd
 };
 
@@ -678,6 +687,9 @@ static u32 CopyPlayerPartnerMonData(u8 monId, u8 *dst)
         battleMon.abilityNum = GetMonData(&gPlayerParty[monId], MON_DATA_ABILITY_NUM);
         battleMon.otId = GetMonData(&gPlayerParty[monId], MON_DATA_OT_ID);
         battleMon.metLevel = GetMonData(&gPlayerParty[monId], MON_DATA_MET_LEVEL);
+        battleMon.isShadow = GetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW);
+        battleMon.heartVal = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE);
+        battleMon.heartMax = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX);
         GetMonData(&gPlayerParty[monId], MON_DATA_NICKNAME, nickname);
         StringCopy_Nickname(battleMon.nickname, nickname);
         GetMonData(&gPlayerParty[monId], MON_DATA_OT_NAME, battleMon.otName);
@@ -937,6 +949,22 @@ static u32 CopyPlayerPartnerMonData(u8 monId, u8 *dst)
         dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_TOUGH_RIBBON);
         size = 1;
         break;
+    case REQUEST_IS_SHADOW_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW);
+        size = 1;
+        break;
+    case REQUEST_REVERSE_MODE_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_REVERSE_MODE);
+        size = 1;
+        break;
+    case REQUEST_HEART_VALUE_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE);
+        size = 1;
+        break;
+    case REQUEST_HEART_MAX_BATTLE:
+        dst[0] = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX);
+        size = 1;
+        break;
     }
 
     return size;
@@ -1013,6 +1041,7 @@ static void SetPlayerPartnerMonData(u8 monId)
             SetMonData(&gPlayerParty[monId], MON_DATA_SPEED, &battlePokemon->speed);
             SetMonData(&gPlayerParty[monId], MON_DATA_SPATK, &battlePokemon->spAttack);
             SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF, &battlePokemon->spDefense);
+            SetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW, &battlePokemon->isShadow);
         }
         break;
     case REQUEST_SPECIES_BATTLE:
@@ -1182,6 +1211,18 @@ static void SetPlayerPartnerMonData(u8 monId)
     case REQUEST_TOUGH_RIBBON_BATTLE:
         SetMonData(&gPlayerParty[monId], MON_DATA_TOUGH_RIBBON, &gBattleResources->bufferA[gActiveBattler][3]);
         break;
+    case REQUEST_IS_SHADOW_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_IS_SHADOW, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_REVERSE_MODE_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_REVERSE_MODE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HEART_VALUE_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HEART_MAX_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX, &gBattleResources->bufferA[gActiveBattler][3]);
+        break;
     }
 
     HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
@@ -1213,7 +1254,7 @@ static void PlayerPartnerHandleLoadMonSprite(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -DISPLAY_WIDTH;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], gBattleMonForms[gActiveBattler]);
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], 0);
     gBattlerControllerFuncs[gActiveBattler] = WaitForMonAnimAfterLoad;
 }
 
@@ -1249,7 +1290,7 @@ static void StartSendOutAnim(u8 battlerId, bool8 dontClearSubstituteBit)
     gSprites[gBattlerSpriteIds[battlerId]].data[2] = species;
     gSprites[gBattlerSpriteIds[battlerId]].oam.paletteNum = battlerId;
 
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerId]], gBattleMonForms[battlerId]);
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerId]], 0);
 
     gSprites[gBattlerSpriteIds[battlerId]].invisible = TRUE;
     gSprites[gBattlerSpriteIds[battlerId]].callback = SpriteCallbackDummy;
@@ -1961,6 +2002,173 @@ static void PlayerPartnerHandleBattleDebug(void)
 {
     PlayerPartnerBufferExecCompleted();
 }
+
+#define tHgTask_monId         data[0]
+#define tHgTask_battler       data[2]
+#define tHgTask_amount_1      data[3]
+#define tHgTask_amount_2      data[4]
+#define tHgTask_frames        data[10]
+
+static void PlayerPartnerHandleHeartValueUpdate(void)
+{
+    u8 monId = gBattleResources->bufferA[gActiveBattler][1];
+    s32 taskId, amount;
+
+    if (GetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE) == 0)
+    {
+        PlayerPartnerBufferExecCompleted();
+    }
+    else
+    {
+        LoadBattleBarGfx(1);
+        GetMonData(&gPlayerParty[monId], MON_DATA_SPECIES);  // Unused return value.
+        amount = T1_READ_32(&gBattleResources->bufferA[gActiveBattler][2]);
+        taskId = CreateTask(Task_LowerHeartValue, 10);
+        gTasks[taskId].tHgTask_monId = monId;
+        gTasks[taskId].tHgTask_amount_1 = amount;
+        gTasks[taskId].tHgTask_amount_2 = amount >> 16;
+        gTasks[taskId].tHgTask_battler = gActiveBattler;
+        gBattlerControllerFuncs[gActiveBattler] = BattleControllerDummy;
+    }
+}
+
+static s32 GetTaskHeartValue(u8 taskId)
+{
+    return (u16)(gTasks[taskId].tHgTask_amount_1) | (gTasks[taskId].tHgTask_amount_2 << 16);
+}
+
+// TODOSHADOW this section differs quite a bit from battle_controller_player, can't remember
+// if it's intentional due to controller differences or if I forgot to copy changes
+// other controllers may need some of the code from this section as well? should probably just
+// disallow shadow mon in recorded battle party selection, if I didn't already
+static void Task_LowerHeartValue(u8 taskId)
+{
+    u32 monId = (u8)(gTasks[taskId].tHgTask_monId);
+    u8 battlerId = gTasks[taskId].tHgTask_battler;
+    u16 amount = GetTaskHeartValue(taskId);
+
+    if ((IsDoubleBattle() == TRUE || monId != gBattlerPartyIndexes[battlerId])) // no bar anim
+    {
+        struct Pokemon *mon = &gPlayerParty[monId];
+        u16 species = GetMonData(mon, MON_DATA_SPECIES);
+        u16 hVal = GetMonData(mon, MON_DATA_HEART_VALUE);
+        u16 hMax = GetMonData(mon, MON_DATA_HEART_MAX);
+        u16 newVal = hVal - amount;
+        u8 hgCurrSection = GetHeartGaugeSection(hVal, hMax);
+        u8 hgNewSection = GetHeartGaugeSection(newVal, hMax);
+
+        if (hgCurrSection != hgNewSection) // handle new section unlock
+        {
+            u8 savedActiveBattler;
+
+            SetMonData(mon, MON_DATA_HEART_VALUE, &newVal);
+            //CalculateMonStats(mon);
+            savedActiveBattler = gActiveBattler;
+            gActiveBattler = battlerId;
+            // TODOSHADOW BtlController_EmitTwoReturnValues(BUFFER_B, RET_VALUE_LEVELED_UP, amount);
+            gActiveBattler = savedActiveBattler;
+
+            if (IsDoubleBattle() == TRUE
+             && ((u16)(monId) == gBattlerPartyIndexes[battlerId] || (u16)(monId) == gBattlerPartyIndexes[BATTLE_PARTNER(battlerId)]))
+                gTasks[taskId].func = Task_LaunchSectionUnlockAnim;
+            else
+            {
+                gBattlerControllerFuncs[battlerId] = CompleteOnInactiveTextPrinter;
+                DestroyTask(taskId);
+            }
+        }
+        else
+        {
+            SetMonData(mon, MON_DATA_EXP, &newVal);
+            gBattlerControllerFuncs[battlerId] = CompleteOnInactiveTextPrinter;
+            DestroyTask(taskId);
+        }
+    }
+    else
+    {
+        gTasks[taskId].func = Task_PrepareToLowerHeartValWithBar;
+    }
+}
+
+static void Task_PrepareToLowerHeartValWithBar(u8 taskId)
+{
+    u32 monId = (u8)(gTasks[taskId].tHgTask_monId);
+    u8 battlerId = gTasks[taskId].tHgTask_battler;
+    u16 amount = GetTaskHeartValue(taskId);
+    struct Pokemon *mon = &gPlayerParty[monId];
+    u16 hVal = GetMonData(mon, MON_DATA_HEART_VALUE);
+    u16 hMax = GetMonData(mon, MON_DATA_HEART_MAX);
+
+    SetBattleBarStruct(battlerId, gHealthboxSpriteIds[battlerId], hMax, hVal, amount);
+    PlaySE(SE_EXP);
+    gTasks[taskId].func = Task_LowerHeartValWithBar;
+}
+
+static void Task_LowerHeartValWithBar(u8 taskId)
+{
+    if (gTasks[taskId].tHgTask_frames < 13)
+    {
+        gTasks[taskId].tHgTask_frames++;
+    }
+    else
+    {
+        u8 monId = gTasks[taskId].tHgTask_monId;
+        u16 amount = GetTaskHeartValue(taskId);
+        u8 battlerId = gTasks[taskId].tHgTask_battler;
+        s32 newVal = MoveBattleBar(battlerId, gHealthboxSpriteIds[battlerId], EXP_BAR, 0);
+        SetHealthboxSpriteVisible(gHealthboxSpriteIds[battlerId]);
+        
+        if (newVal == -1) // The bar has been filled with given exp points.
+        {
+            u16 hVal = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE);
+            u16 hMax = GetMonData(&gPlayerParty[monId], MON_DATA_HEART_MAX);
+            u8 hgCurrSection = GetHeartGaugeSection(hVal, hMax);
+            u8 hgNewSection = GetHeartGaugeSection(newVal, hMax);
+
+            m4aSongNumStop(SE_EXP);
+
+            if (hgCurrSection != hgNewSection) // handle new section unlock
+            {
+                u8 savedActiveBattler;
+
+                SetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE, &newVal);
+                // TODOSHADOW Replace CalculateMonStats with any necessary changes based on section unlocks (new moves, etc)
+                // CalculateMonStats(&gPlayerParty[monId]);
+                savedActiveBattler = gActiveBattler;
+                gActiveBattler = battlerId;
+                BtlController_EmitTwoReturnValues(BUFFER_B, RET_VALUE_LEVELED_UP, amount);
+                gActiveBattler = savedActiveBattler;
+                gTasks[taskId].func = Task_LaunchSectionUnlockAnim;
+            }
+            else
+            {
+                SetMonData(&gPlayerParty[monId], MON_DATA_HEART_VALUE, &hVal);
+                gBattlerControllerFuncs[battlerId] = CompleteOnInactiveTextPrinter;
+                DestroyTask(taskId);
+            }
+        }
+    }
+}
+
+static void Task_LaunchSectionUnlockAnim(u8 taskId)
+{
+    u8 battlerId = gTasks[taskId].tHgTask_battler;
+    u8 monIndex = gTasks[taskId].tHgTask_monId;
+
+    if (IsDoubleBattle() == TRUE && monIndex == gBattlerPartyIndexes[BATTLE_PARTNER(battlerId)])
+        battlerId ^= BIT_FLANK;
+
+    InitAndLaunchSpecialAnimation(battlerId, battlerId, battlerId, B_ANIM_SECTION_UNLOCK);
+
+    gBattlerControllerFuncs[battlerId] = CompleteOnInactiveTextPrinter;
+    DestroyTask(taskId);
+}
+
+#undef tHgTask_monId
+#undef tHgTask_battler
+#undef tHgTask_amount_1
+#undef tHgTask_amount_2
+#undef tHgTask_frames
 
 static void PlayerPartnerCmdEnd(void)
 {

@@ -664,8 +664,16 @@
 #define STRINGID_SNOWCONTINUES                        662
 #define STRINGID_SNOWSTOPPED                          663
 #define STRINGID_SNOWWARNINGSNOW                      664
+#define STRINGID_SHADOWPKMNNOTICE                     665
+#define STRINGID_TRAINERCALLTOMON                     666
+#define STRINGID_PKMNSTOREDEXP                        667
+#define STRINGID_PKMNHEARTGAUGEUPDATE                 668
+#define STRINGID_STARTEDSHADOW_SKY                    669
+#define STRINGID_SHADOW_SKYCONTINUES                  670
+#define STRINGID_SHADOW_SKYSTOPPED                    671
+#define STRINGID_SHADOW_SKYDAMAGE                     672
 
-#define BATTLESTRINGS_COUNT                           665
+#define BATTLESTRINGS_COUNT                           673
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,
@@ -732,6 +740,7 @@
 #define B_MSG_STARTED_SUNLIGHT  4
 #define B_MSG_STARTED_HAIL      5
 #define B_MSG_STARTED_SNOW      6
+#define B_MSG_STARTED_SHADOW_SKY 7
 
 // gRainContinuesStringIds
 #define B_MSG_RAIN_CONTINUES     0
@@ -742,6 +751,7 @@
 #define B_MSG_SANDSTORM  0
 #define B_MSG_HAIL       1
 #define B_MSG_SNOW       2
+#define B_MSG_SHADOW_SKY 3
 
 // gReflectLightScreenSafeguardStringIds
 #define B_MSG_SIDE_STATUS_FAILED     0
