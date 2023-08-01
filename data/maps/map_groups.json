@@ -1,4 +1,5 @@
 {
+  "layouts_table_label": "gMapLayouts",
   "group_order": [
     "gMapGroup_TownsAndRoutes",
     "gMapGroup_IndoorLittleroot",
@@ -95,7 +96,8 @@
     "Underwater_Route125",
     "WirraPort",
     "Route01",
-    "Route02"
+    "Route02",
+    "SalttrunkTown"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
