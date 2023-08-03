@@ -4436,7 +4436,7 @@
       "name": "Route02_Layout",
       "width": 20,
       "height": 20,
-      "primary_tileset": "gTileset_Terrain",
+      "primary_tileset": "gTileset_terrain",
       "secondary_tileset": "gTileset_Haunted_Houses",
       "border_filepath": "data/layouts/Route02/border.bin",
       "blockdata_filepath": "data/layouts/Route02/map.bin"

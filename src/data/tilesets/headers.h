@@ -859,7 +859,7 @@ const struct Tileset gTileset_Outdoors =
     .callback = NULL,
 };
 
-const struct Tileset gTileset_Terrain =
+const struct Tileset gTileset_terrain =
 {
     .isCompressed = TRUE,
     .isSecondary = FALSE,

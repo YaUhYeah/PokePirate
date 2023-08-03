@@ -1,0 +1,63 @@
+mapscripts WirraPort_MapScripts {}
+
+script GiveMon {
+	lockall
+	showmonpic(SPECIES_MUDKIP, 10, 3)
+	msgbox("Pick up mudkip?",MSGBOX_YESNO)
+	if (var(VAR_RESULT) == YES){
+		givemon(SPECIES_MUDKIP,5)
+		if (var(VAR_RESULT) == MON_GIVEN_TO_PARTY){
+			playfanfare(MUS_OBTAIN_ITEM)
+			msgbox("Recieved Mudkip!")
+			removeobject(1)
+			setflag(FLAG_UNUSED_0x020)
+			call(NicknamePartyMon)
+			setflag(FLAG_SYS_POKEMON_GET)
+		} elif (var(VAR_RESULT) == MON_GIVEN_TO_PC) {
+			
+			playfanfare(MUS_OBTAIN_ITEM)
+			msgbox("Recieved Mudkip!")
+			removeobject(1)
+			setflag(FLAG_UNUSED_0x020)
+			call(NicknameBoxMon)
+			setflag(FLAG_SYS_POKEMON_GET)
+		} else {
+			hidemonpic
+			msgbox("No more room.")
+		}
+	} else {
+		hidemonpic
+		msgbox("damn fair ig")
+	}
+	waitmessage
+	setwildshadowbattle(SPECIES_ZIGZAGOON, 10, 0, 1000)
+    dowildbattle
+	releaseall
+	end
+}
+
+script GiveBalls {
+	lock
+	giveitem(ITEM_POKE_BALL, 10)
+	setflag(FLAG_UNUSED_0x021)
+	release
+	end
+}
+
+script NicknamePartyMon {
+	msgbox("Give this pokemon a nickname?" ,MSGBOX_YESNO)
+	hidemonpic
+	if (var(VAR_RESULT) == YES){
+		call(Common_EventScript_GetGiftMonPartySlot)
+		call(Common_EventScript_NameReceivedPartyMon)
+	} 
+}
+
+script NicknameBoxMon {
+	msgbox("Give this pokemon a nickname?" ,MSGBOX_YESNO)
+	hidemonpic
+	if (var(VAR_RESULT) == YES){
+		call(Common_EventScript_NameReceivedPartyMon)
+	}
+		call(Common_EventScript_TransferredToPC)
+}
