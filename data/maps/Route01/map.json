@@ -12,7 +12,13 @@
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": 0,
+  "connections": [
+    {
+      "map": "MAP_SALTTRUNK_TOWN",
+      "offset": 3,
+      "direction": "left"
+    }
+  ],
   "object_events": [
 
   ],
@@ -22,7 +28,7 @@
       "y": 22,
       "elevation": 0,
       "dest_map": "MAP_WIRRA_PORT",
-      "dest_warp_id": 0
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [

@@ -4444,8 +4444,8 @@
     {
       "id": "LAYOUT_SALTTRUNK_TOWN",
       "name": "SalttrunkTown_Layout",
-      "width": 40,
-      "height": 40,
+      "width": 50,
+      "height": 50,
       "primary_tileset": "gTileset_Outdoors",
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/SalttrunkTown/border.bin",

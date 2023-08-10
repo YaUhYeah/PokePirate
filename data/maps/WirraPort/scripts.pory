@@ -30,8 +30,8 @@ script GiveMon {
 		msgbox("damn fair ig")
 	}
 	waitmessage
-	setwildshadowbattle(SPECIES_ZIGZAGOON, 10, 0, 1000)
-    dowildbattle
+	trainerbattle_single(TRAINER_SHADOW_TEST, "battle me now scrublord", "imagine")
+	msgbox("damn i lost to a noob like pando", MSGBOX_AUTOCLOSE)
 	releaseall
 	end
 }

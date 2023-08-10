@@ -251,6 +251,7 @@
 
 // gTileset_Haunted
 #define METATILE_Haunted_LongGrass  0x02F
+#define METATILE_Haunted_TallGrass  0x004
 
 // gTileset_InsideOfTruck
 #define METATILE_InsideOfTruck_DoorClosedFloor_Bottom  0x21D
@@ -374,7 +375,8 @@
 #define METATILE_Mossdeep_Door_SpaceCenter  0x2ED
 
 // gTileset_Outdoors
-#define METATILE_Outdoors_Door  0x13A
+#define METATILE_Outdoors_Door       0x13A
+#define METATILE_Outdoors_TallGrass  0x004
 
 // gTileset_Pacifidlog
 #define METATILE_Pacifidlog_Door                               0x21A

@@ -12,8 +12,8 @@ GiveMon::
 	msgbox GiveMon_Text_3
 GiveMon_1:
 	waitmessage
-	setwildshadowbattle SPECIES_ZIGZAGOON, 10, 0, 1000
-	dowildbattle
+	trainerbattle_single TRAINER_SHADOW_TEST, GiveMon_Text_4, GiveMon_Text_5
+	msgbox GiveMon_Text_6, MSGBOX_AUTOCLOSE
 	releaseall
 	end
 
@@ -92,6 +92,15 @@ GiveMon_Text_2:
 
 GiveMon_Text_3:
 	.string "damn fair ig$"
+
+GiveMon_Text_4:
+	.string "battle me now scrublord$"
+
+GiveMon_Text_5:
+	.string "imagine$"
+
+GiveMon_Text_6:
+	.string "damn i lost to a noob like pando$"
 
 NicknamePartyMon_Text_0:
 	.string "Give this pokemon a nickname?$"
